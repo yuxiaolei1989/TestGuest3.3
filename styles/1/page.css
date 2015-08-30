@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+#page_num{
+	clear:both;
+	height:20px;
+	padding:10px 0;
+}
+#page_num ul{
+	height:20px;
+	text-align:center;
+}
+#page_num ul li{
+	display:inline-block;
+	margin:10px 3px;
+}
+#page_num ul li a{
+	display:inline-block;
+	width:25px;
+	height:20px;
+	border:1px solid #999;
+	line-height:20px;
+	text-align:center;
+	text-decoration:none;
+}
+#page_num ul li a:hover,#page_num ul li a.selected{
+	background:#BCBCBC;
+	font-weight:bold;
+	color:#fff;
+}
+
+#page_text{
+	clear:both;
+	height:20px;
+	padding:10px 0;
+}
+#page_text ul{
+	text-align:center;
+}
+#page_text ul li{
+	display:inline;
+	margin:10px 5px;
+}
+#page_text ul li a{
+	text-decoration:underline;
+	color:#333;
+}

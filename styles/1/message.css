@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+body {
+	width:auto;
+}
+#message h3 {
+	width:90%;
+	margin:10px auto;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	border:1px dashed #333;
+}
+#message dl {
+	width:90%;
+	margin:0 auto;
+}
+#message dl dd {
+	margin:5px 0;
+}
+#message dl dd input.text {
+	width:180px;
+	height:19px;
+	border:1px dashed #333;
+	background:#fff;
+}
+#message dl dd input.code {
+	width:60px;
+	vertical-align:middle;
+}
+#message dl dd textarea{
+	width:100%;
+	height:120px;
+	background:#fff;
+	border:1px dashed #333;
+	overflow-y:auto;
+}
+#message dl dd input.button {
+	cursor:pointer;
+}
+#message dl dd img{
+	cursor:pointer;
+}
