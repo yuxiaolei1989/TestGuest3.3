@@ -18,7 +18,7 @@ if($_GET['action'] == 'register'){
     
     _check_code($_POST['code'],$_SESSION['code']);
     
-    include ROOT_PATH.'includes/register.func.php';
+    include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
     $_clean['uniqid'] = _check_uniqid($_POST['uniqid'],$_SESSION['uniqid']);
     $_clean['active'] = _sha1_uniqid();

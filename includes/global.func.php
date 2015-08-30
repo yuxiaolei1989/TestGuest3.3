@@ -183,7 +183,13 @@ function _sha1_uniqid(){
  */
 function _mysql_string($_string){
     if(!GPC){
-        return mysql_real_escape_string($_string);
+        if(is_array($_string)){
+            foreach($_string as $_key => $_value){
+                $_string[$_key] = _mysql_string($_value);
+            }
+        }else{
+            return mysql_real_escape_string($_string);
+        }   
     }
     return $_string;
     

@@ -20,7 +20,7 @@ if($_GET['action'] == 'modify'){
         
         _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
         
-        include ROOT_PATH.'includes/register.func.php';
+        include ROOT_PATH.'includes/check.func.php';
         
         $_clean = array();
         $_clean['password'] = _check_modify_password($_POST['password'],6);

@@ -209,6 +209,14 @@ function _check_url($_string,$_max_num){
     return _mysql_string($_string);
 }
 
+function _check_content($_string,$_min_num,$_max_num){
+    $_len  = mb_strlen($_string,'utf-8');
+    if($_len < $_min_num || $_len > $_max_num ){
+        _alert_back("短信内容不得小于".$_min_num."位或者大于".$_max_num."位！");
+    }
+    return $_string;
+}
+
 
 
 

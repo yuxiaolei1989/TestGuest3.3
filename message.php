@@ -16,6 +16,45 @@ if(!isset($_COOKIE['username'])){
     _alert_close("请先登录！");
 }
 
+if($_GET['action'] == 'write'){
+    _check_code($_POST['code'],$_SESSION['code']);
+    if(!!$_rows =_fetch_array("SELECT tg_uniqid FROM tg_user WHERE tg_username='{$_COOKIE['username']}'")){
+        _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+        include ROOT_PATH.'includes/check.func.php';
+        $_clean = array();
+        $_clean['touser'] = $_POST['touser'];
+        $_clean['fromuser'] = $_COOKIE['username'];
+        $_clean['content'] = _check_content($_POST['content'],10,200);
+        $_clean = _mysql_string($_clean);
+        
+        _query("INSERT INTO tg_message (
+                tg_touser,
+                tg_fromuser,
+                tg_content,
+                tg_date
+            )
+            VALUES (
+               '{$_clean['touser']}',
+               '{$_clean['fromuser']}',
+               '{$_clean['content']}',
+               NOW()
+            )
+       ");
+        
+        if(_affected_rows() == 1){
+            _close();
+            _session_destroy();
+            _alert_close("短信发送成功！");
+        }else{
+            _close();
+            _session_destroy();
+            _alert_back("短信发送失败！");
+        }
+    }else{
+        _alert_close("非法登录！");
+    }    
+}
+
 if(isset($_GET['id'])){
     $_rows = _fetch_array("SELECT tg_username FROM tg_user WHERE tg_id='{$_GET['id']}' LIMIT 1");
     if($_rows){
@@ -43,12 +82,13 @@ if(isset($_GET['id'])){
 
 <div id="message">
 	<h3>写短信</h3>
-	<form>
+	<form method="post" action="?action=write">
 	   <dl>
 	       <dd><input type="text" class="text" value="to:<?php echo $_rows['tg_username']?>" /></dd>
 	       <dd><textarea rows="" cols="" name="content"></textarea></dd>
 	       <dd>验 证 码：<input type="text" name="code" class="text code"  /> <img src="code.php" alt="验证码" id="code" /> <input type="submit" class="button" id="submit" value="发送信息" /></dd>
 	   </dl>
+	   <input type="hidden" name="touser" value="<?php echo $_rows['tg_username']?>" />
 	</form>
 	
 </div>
