@@ -134,7 +134,7 @@ function _paging($_type){
         echo '<div id="page_text">
                 <ul>
                     <li>'.$_page.'/'.$_pageabsolute.'页 |</li>
-        	        <li>共有<strong>'.$_num.'</strong>个会员 |</li>';
+        	        <li>共有<strong>'.$_num.'</strong>条数据 |</li>';
         	       
         	           if($_page == 1){
         	               echo "<li>首页 |</li>
@@ -165,7 +165,10 @@ function _paging($_type){
  * 删除session
  */
 function _session_destroy(){
-    session_destroy();
+    if(session_start()){
+        session_destroy();
+    }
+    
 }
 
 /**

@@ -15,6 +15,46 @@ require dirname(__FILE__).'/includes/common.inc.php';
 if(!isset($_COOKIE['username'])){
     _alert_back("请登录账号！", "login.php");
 }
+
+if($_GET['action'] == 'delete' && isset($_GET['id'])){
+    $_rows = _fetch_array("SELECT
+                                tg_id
+                           FROM
+                                tg_message
+                           WHERE
+                                tg_id='{$_GET['id']}'
+                           LIMIT
+                                1
+                                ");
+    if(!!$_rows){
+        if(!!$_rows2 =_fetch_array("SELECT tg_uniqid FROM tg_user WHERE tg_username='{$_COOKIE['username']}'")){
+        
+            _uniqid($_rows2['tg_uniqid'], $_COOKIE['uniqid']);
+            
+            _query("DELETE FROM 
+                            tg_message 
+                    WHERE
+                            tg_id='{$_GET['id']}'
+                    LIMIT
+                            1
+                    ");
+            if(_affected_rows() == 1){
+                _close();
+                _session_destroy();
+                _location("短信删除成功！", "member_message.php");
+            }else{
+                _close();
+                _session_destroy();
+                _alert_back("短息删除失败！");
+            }
+        }
+        
+    }else{
+        _alert_back("此短信不存在！");
+    }
+    exit();
+}
+
 if(isset($_GET['id'])){
     $_rows = _fetch_array("SELECT
                                 tg_fromuser,tg_content,tg_date
@@ -44,6 +84,7 @@ if(isset($_GET['id'])){
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>
+<script type="text/javascript" src="js/member_message_detail.js"></script>
 </head>
 <body>
 <?php 
@@ -60,7 +101,7 @@ if(isset($_GET['id'])){
 	       <dd>发 信 人：<?php echo $_rows['tg_fromuser']?></dd>
 	       <dd class="content">内容：<strong><?php echo $_rows['tg_content']?></strong></dd>
 	       <dd>发信时间：<?php echo $_rows['tg_date']?></dd>
-	       <dd class="button"><input type="button" value="返回列表" onclick="javascript:history.back();" /> <input type="button" value="删除短信" /></dd>
+	       <dd class="button"><input type="button" value="返回列表" id="return" /> <input type="button" id="delete" name="<?php echo $_GET['id']?>" value="删除短信" /></dd>
 	   </dl>
 	</div>
 </div>

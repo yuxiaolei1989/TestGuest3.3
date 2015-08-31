@@ -70,7 +70,7 @@ $_result = _query("SELECT
 	   </table>
 	   <?php 
     	   _free_result($_result);
-    	   _paging(1)
+    	   _paging(2)
     	?>
 	</div>
 </div>
