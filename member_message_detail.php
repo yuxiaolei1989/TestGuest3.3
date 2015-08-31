@@ -4,7 +4,6 @@
 * Author: yulei@addcn.com
 * Date: 2015-8-23
 */
-session_start();
 //定义个常量，用来授权调用includes里面的文件
 define('IN_TG',true);
 //定义个常量，用来指定本页的内容
@@ -40,13 +39,13 @@ if($_GET['action'] == 'delete' && isset($_GET['id'])){
                     ");
             if(_affected_rows() == 1){
                 _close();
-                _session_destroy();
                 _location("短信删除成功！", "member_message.php");
             }else{
                 _close();
-                _session_destroy();
                 _alert_back("短息删除失败！");
             }
+        }else{
+            _alert_back("非法登录！");
         }
         
     }else{

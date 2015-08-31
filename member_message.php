@@ -16,6 +16,33 @@ if(!isset($_COOKIE['username'])){
     _alert_back("请登录账号！", "login.php");
 }
 
+if($_GET['action'] == 'delete' && isset($_POST['ids'])){
+    $_clean = array();
+    $_clean['ids'] = _mysql_string(implode(",",$_POST['ids']));
+   
+    if(!!$_rows =_fetch_array("SELECT tg_uniqid FROM tg_user WHERE tg_username='{$_COOKIE['username']}'")){
+    
+        _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+        
+        _query("DELETE FROM 
+                    tg_message
+                WHERE
+                    tg_id
+                IN
+                    ({$_clean['ids']})
+        ");
+        if(_affected_rows()){
+            _close();
+            _location("短信删除成功！", "member_message.php");
+        }else{
+            _close();
+            _alert_back("短息删除失败！");
+        }
+    }else{
+        _alert_back("非法登录！");
+    }
+}
+
 global $_pagesize,$_pagenum;
 _page("SELECT tg_id FROM tg_message", 15);
 
@@ -39,6 +66,7 @@ $_result = _query("SELECT
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>
+<script type="text/javascript" src="js/member_message.js"></script>
 </head>
 <body>
 <?php 
@@ -51,6 +79,7 @@ $_result = _query("SELECT
     ?>
 	<div id="member_main">
 	   <h2>短信管理中心</h2>
+	   <form name="" method="post" action="?action=delete">
 	   <table cellspacing="1">
 	       <tr>
 	           <th>发信人</th><th>短信内容</th><th>时间</th><th>操作</th>
@@ -62,12 +91,14 @@ $_result = _query("SELECT
                <td><?php echo $_rows['tg_fromuser']?></td>
                <td><a href="member_message_detail.php?id=<?php echo $_rows['tg_id']?>" title="<?php echo $_rows['tg_content']?>"><?php echo _title($_rows['tg_content'])?></a></td>
                <td><?php echo $_rows['tg_date']?></td>
-               <td><input type="checkbox" /></td>
+               <td><input type="checkbox" name="ids[]" value="<?php echo $_rows['tg_id']?>" /></td>
            </tr>
            <?php 
               }
            ?>
+           <tr><td colspan="4"> <label>全选 <input type="checkbox" name="chkall" id="all"/></label> <input type="submit" value="批删除" /></td></tr>
 	   </table>
+	   </form>
 	   <?php 
     	   _free_result($_result);
     	   _paging(2)
