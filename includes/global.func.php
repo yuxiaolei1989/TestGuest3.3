@@ -68,6 +68,13 @@ function _uniqid($_mysql_uniqid,$_cookie_uniqid){
     }
 }
 
+function _title($_string){
+    if(mb_strlen($_string,'utf-8') > 14){
+        $_string = mb_substr($_string,1,14,'utf-8')."...";
+    }
+    return $_string;
+}
+
 /**
  * 转移特殊字符 - 运用了递归方法
  * @param string || Array $_string
