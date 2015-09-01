@@ -44,7 +44,7 @@ $_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face FROM tg_user ORDER BY
 	   <dd class="user"><?php echo $_rows['tg_username']?>(<?php echo $_rows['tg_sex']?>)</dd>
 	   <dt><img src="<?php echo $_rows['tg_face']; ?>" alt="<?php echo $_rows['tg_username']?>" /></dt>
 	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_rows['tg_id']?>">发消息</a></dd>
-	   <dd class="friend">加为好友</dd>
+	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_rows['tg_id']?>">加为好友</a></dd>
 	   <dd class="guest">写留言</dd>
 	   <dd class="flower">给他送花</dd>
 	</dl>

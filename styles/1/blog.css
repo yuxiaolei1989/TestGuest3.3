@@ -30,6 +30,10 @@
 	height:20px;
 	line-height:20px;
 }
+#blog dl dd a{
+	color:#333;
+	text-decoration:none;
+}
 #blog dl dd.user{
 	width:150px;
 	float:none;
