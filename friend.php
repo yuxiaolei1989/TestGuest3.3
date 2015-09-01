@@ -27,6 +27,28 @@ if($_GET['action'] == 'add'){
         $_clean['fromuser'] = $_COOKIE['username'];
         $_clean['content'] = _check_content($_POST['content'],10,200);
         $_clean = _mysql_string($_clean);
+        
+        if($_clean['touser'] == $_clean['fromuser']){
+            _alert_close("请不要添加自己！");
+        }
+        
+        if(!!$_rows2 = _fetch_array("SELECT
+                                        tg_id
+                                     FROM
+                                        tg_friend
+                                     WHERE
+                                        (tg_touser='{$_clean['touser']}'
+                                     AND
+                                        tg_fromuser='{$_clean['fromuser']}')
+                                     OR
+                                        (tg_touser='{$_clean['fromuser']}'
+                                     AND
+                                        tg_fromuser='{$_clean['touser']}')
+                                     LIMIT
+                                        1
+                                    ")){
+            _alert_close("你们已经是好友了！");
+        }
     
         _query("INSERT INTO tg_friend (
             tg_touser,
