@@ -38,4 +38,34 @@ define('DB_NAME','testguest');
 _connect();
 _select_db();
 _set_names();
+
+//短信提醒
+$_message = _fetch_array("SELECT COUNT(tg_id)
+                    AS count
+                    FROM
+                        tg_message
+                    WHERE
+                        tg_state=0
+                    ");
+if(empty($_message['count'])){
+    $_message_html = '<strong class="noread">(0)</strong>';
+}else{
+    $_message_html = '<strong class="read"><a href="member_message.php">('.$_message['count'].')</a></strong>';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>

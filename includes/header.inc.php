@@ -12,6 +12,7 @@
 if (!defined('IN_TG')) {
 	exit('Access Defined!');
 }
+global $_message_html;
 ?>
 <div id="header">
 	<h1><a href="index.php">瓢城Web俱乐部多用户留言系统</a></h1>
@@ -19,7 +20,7 @@ if (!defined('IN_TG')) {
 		<li><a href="index.php">首页</a></li>
 		<?php 
 		  if(isset($_COOKIE['username'])){
-		      echo '<li><a href="member.php">'.$_COOKIE['username'].'·个人中心</a></li>';
+		      echo '<li><a href="member.php">'.$_COOKIE['username'].'·个人中心</a>&nbsp;'.$_message_html.'</li>';
 		  }else{
 		      echo '<li><a href="register.php">注册</a></li>&nbsp;
 		            <li><a href="login.php">登录</a></li>';

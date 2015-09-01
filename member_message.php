@@ -47,7 +47,7 @@ global $_pagesize,$_pagenum;
 _page("SELECT tg_id FROM tg_message", 15);
 
 $_result = _query("SELECT
-                        tg_id,tg_fromuser,tg_content,tg_date 
+                        tg_id,tg_state,tg_fromuser,tg_content,tg_date 
                     FROM 
                         tg_message 
                     ORDER BY 
@@ -82,21 +82,41 @@ $_result = _query("SELECT
 	   <form name="" method="post" action="?action=delete">
 	   <table cellspacing="1">
 	       <tr>
-	           <th>发信人</th><th>短信内容</th><th>时间</th><th>操作</th>
+	           <th>发信人</th><th>短信内容</th><th>时间</th><th>狀態</th><th>操作</th>
 	       </tr>
 	       <?php 
                while (!!$_rows = _fetch_array_list($_result)){
            ?>
            <tr>
                <td><?php echo $_rows['tg_fromuser']?></td>
-               <td><a href="member_message_detail.php?id=<?php echo $_rows['tg_id']?>" title="<?php echo $_rows['tg_content']?>"><?php echo _title($_rows['tg_content'])?></a></td>
+               <td>
+                    <a href="member_message_detail.php?id=<?php echo $_rows['tg_id']?>" title="<?php echo $_rows['tg_content']?>">
+                        <?php
+                            if(empty($_rows['tg_state'])){
+                                echo "<strong>"._title($_rows['tg_content'])."</strong>";
+                            }else{
+                                echo _title($_rows['tg_content']);
+                            }
+                            
+                        ?>
+                    </a>
+               </td>
                <td><?php echo $_rows['tg_date']?></td>
+               <td>
+               <?php 
+                if(empty($_rows['tg_state'])){
+                    echo "<img src='images/noread.gif' />";
+                }else{
+                    echo "<img src='images/read.gif' />";
+                }
+               ?>
+               </td>
                <td><input type="checkbox" name="ids[]" value="<?php echo $_rows['tg_id']?>" /></td>
            </tr>
            <?php 
               }
            ?>
-           <tr><td colspan="4"> <label>全选 <input type="checkbox" name="chkall" id="all"/></label> <input type="submit" value="批删除" /></td></tr>
+           <tr><td colspan="5"> <label>全选 <input type="checkbox" name="chkall" id="all"/></label> <input type="submit" value="批删除" /></td></tr>
 	   </table>
 	   </form>
 	   <?php 

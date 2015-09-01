@@ -53,6 +53,14 @@ h2 {
 	color:#f00;
 	text-decoration:underline;
 }
+#header ul li strong.noread{
+	background:url(../../images/noread.gif) no-repeat left center;
+	padding-left:18px;
+}
+#header ul li strong.read{
+	background:url(../../images/meg.gif) no-repeat left center;
+	padding-left:18px;
+}
 
 
 #member {

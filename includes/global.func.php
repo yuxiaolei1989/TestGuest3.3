@@ -68,6 +68,11 @@ function _uniqid($_mysql_uniqid,$_cookie_uniqid){
     }
 }
 
+/**
+ * 截取字符串
+ * @param unknown $_string
+ * @return string
+ */
 function _title($_string){
     if(mb_strlen($_string,'utf-8') > 14){
         $_string = mb_substr($_string,1,14,'utf-8')."...";

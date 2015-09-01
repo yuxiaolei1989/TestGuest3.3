@@ -56,7 +56,7 @@ if($_GET['action'] == 'delete' && isset($_GET['id'])){
 
 if(isset($_GET['id'])){
     $_rows = _fetch_array("SELECT
-                                tg_fromuser,tg_content,tg_date
+                                tg_fromuser,tg_state,tg_content,tg_date
                             FROM
                                 tg_message
                             WHERE
@@ -67,6 +67,20 @@ if(isset($_GET['id'])){
     if(!$_rows){
         _alert_back("此信息不存在！");
     }else{
+        if(empty($_rows['tg_state'])){
+            _query("UPDATE tg_message 
+                    SET 
+                        tg_state=1
+                    WHERE
+                        tg_id='{$_GET['id']}'
+                    LIMIT
+                        1
+            ");
+        }
+        if(!_affected_rows()){
+            _close();
+            _alert_back("數據操作異常！");
+        }
         $_rows = _html($_rows);
     }
 }else{
