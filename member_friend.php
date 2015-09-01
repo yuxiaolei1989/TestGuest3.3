@@ -16,6 +16,38 @@ if(!isset($_COOKIE['username'])){
     _alert_back("请登录账号！", "login.php");
 }
 
+if($_GET['action'] == 'check' && isset($_GET['id'])){
+    $_rows = _fetch_array("SELECT
+                                tg_id
+                           FROM
+                                tg_friend
+                           WHERE
+                                tg_id='{$_GET['id']}'
+                           LIMIT
+                                1
+                          ");
+    if(!!$_rows){
+        _query("UPDATE
+                    tg_friend
+                SET
+                    tg_state=1
+                WHERE
+                    tg_id='{$_GET['id']}'
+                LIMIT
+                    1
+              ");
+        if(_affected_rows() == 1){
+            _close();
+            _location("验证成功！", "member_friend.php");
+        }else{
+            _close();
+            _alert_back("验证失败！");
+        }
+    }else{
+        _alert_back("此好友不存在！");
+    }
+}
+
 if($_GET['action'] == 'delete' && isset($_POST['ids'])){
     $_clean = array();
     $_clean['ids'] = _mysql_string(implode(",",$_POST['ids']));
@@ -123,15 +155,15 @@ $_result = _query("SELECT
                <?php 
                     if($_rows['tg_fromuser'] == $_COOKIE['username']){
                         if(empty($_rows['tg_state'])){
-                            echo "对方未验证！";
+                            echo "<span style='color:gray'>对方未验证！</span>";
                         }else{
-                            echo "对方验证通过！";
+                            echo "<span style='color:green'>对方验证通过！</span>";
                         }
                     }else{
                         if(empty($_rows['tg_state'])){
-                            echo "你未验证！";
+                            echo "<a href='?action=check&id=".$_rows['tg_id']."' style='color:red'>你未验证！</a>";
                         }else{
-                            echo "你验证通过！";
+                            echo "<span style='color:green'>你验证通过！</span>";
                         }
                     }
                 ?>

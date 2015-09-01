@@ -13,7 +13,7 @@ window.onload = function(){
 		}
 	}
 	form.onsubmit = function(){
-		if(confirm("确定要删除此条短信？")){
+		if(confirm("确定要删除？")){
 			return true;
 		}else{
 			return false;
