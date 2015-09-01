@@ -4,7 +4,8 @@
 
 window.onload = function(){
 	var message = document.getElementsByName('message'),
-		friend = document.getElementsByName('friend');
+		friend = document.getElementsByName('friend'),
+		flower = document.getElementsByName('flower');
 
 	for(var i=0;i<message.length; i++){
 		message[i].onclick = function(){
@@ -15,6 +16,12 @@ window.onload = function(){
 	for(var i=0;i<friend.length; i++){
 		friend[i].onclick = function(){
 			centerWindow("friend.php?id="+this.title,'friend',250,400);
+		}
+	}
+	
+	for(var i=0;i<flower.length; i++){
+		flower[i].onclick = function(){
+			centerWindow("flower.php?id="+this.title,'flower',250,400);
 		}
 	}
 }
