@@ -46,6 +46,8 @@ $_message = _fetch_array("SELECT COUNT(tg_id)
                         tg_message
                     WHERE
                         tg_state=0
+                    AND
+                        tg_touser='{$_COOKIE['username']}'
                     ");
 if(empty($_message['count'])){
     $_message_html = '<strong class="noread">(0)</strong>';

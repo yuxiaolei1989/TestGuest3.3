@@ -30,6 +30,7 @@ if($_GET['action'] == 'add'){
         
         if($_clean['touser'] == $_clean['fromuser']){
             _alert_close("请不要添加自己！");
+            exit;
         }
         
         if(!!$_rows2 = _fetch_array("SELECT
@@ -48,6 +49,7 @@ if($_GET['action'] == 'add'){
                                         1
                                     ")){
             _alert_close("你们已经是好友了！");
+            exit;
         }
     
         _query("INSERT INTO tg_friend (
