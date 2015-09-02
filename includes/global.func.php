@@ -68,6 +68,38 @@ function _uniqid($_mysql_uniqid,$_cookie_uniqid){
     }
 }
 
+function _get_xml($_xmlfile){
+    $_xmlfile = "new.xml";
+    $_html = array();
+    if(file_exists($_xmlfile)){
+        $_xml = file_get_contents("new.xml");
+        preg_match_all('/<vip>(.*)<\/vip>/s',$_xml,$_dom);
+        foreach ($_dom[1] as $_value){
+            preg_match_all('/<id>(.*)<\/id>/s',$_value,$_html['id']);
+            preg_match_all('/<username>(.*)<\/username>/s',$_value,$_html['username']);
+            preg_match_all('/<sex>(.*)<\/sex>/s',$_value,$_html['sex']);
+            preg_match_all('/<face>(.*)<\/face>/s',$_value,$_html['face']);
+            preg_match_all('/<email>(.*)<\/email>/s',$_value,$_html['email']);
+            preg_match_all('/<url>(.*)<\/url>/s',$_value,$_html['url']);
+        }
+        foreach($_html as $_key => $_item){
+            foreach ($_item[1] as $_val){
+                $_html[$_key] = $_val;
+            }
+    
+        }
+    }else{
+        echo "文件不存在！";
+    }
+    
+    return $_html;
+}
+
+/**
+ * 設置xml - 首頁-新進會員使用
+ * @param unknown $_xmlfile
+ * @param unknown $_clean
+ */
 function _set_xml($_xmlfile,$_clean){
     $_fp = @fopen('new.xml','w');
     if(!$_fp){
