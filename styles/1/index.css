@@ -11,10 +11,61 @@
 	border:2px solid #ccc;
 	float:left;
 	margin:0 0 10px 0;
+	font-size:12px;
 }
 #pics {
 	width:340px;
 	height:250px;
 	border:2px solid #ccc;
 	float:left;
+}
+
+#user dl{
+	width:170px;
+	margin:0 auto;
+	padding-top:10px;
+}
+#user dl dt{
+	width:150px;
+	margin-bottom:5px;
+}
+#user dl dt img{
+	margin:0 auto;
+	display:block;
+}
+#user dl dd{
+	width:85px;
+	float:left;
+	text-align:center;
+	height:20px;
+	line-height:20px;
+}
+#user dl dd a{
+	color:#333;
+	text-decoration:none;
+}
+#user dl dd.user{
+	width:170px;
+	float:none;
+	color:#f60;
+}
+#user dl dd.email,#user dl dd.url{
+	width:170px;
+	float:none;
+	clear:both;
+	text-align:left;
+	padding-top:2px;
+	text-indent:5px;
+}
+#user dl dd.message{
+	background:url(../../images/x1.gif) no-repeat 5px 35%;
+}
+#user dl dd.friend{
+	background:url(../../images/x2.gif) no-repeat left 35%;
+}
+#user dl dd.guest{
+	background:url(../../images/x3.gif) no-repeat 5px 35%;
+}
+#user dl dd.flower{
+	background:url(../../images/x4.gif) no-repeat left 35%;
 }

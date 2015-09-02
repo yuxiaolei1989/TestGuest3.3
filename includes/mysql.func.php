@@ -99,6 +99,10 @@ function _free_result($_result){
     mysql_free_result($_result);
 }
 
+function _insert_id(){
+    return mysql_insert_id();
+}
+
 /**
  * 
  */

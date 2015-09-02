@@ -68,6 +68,38 @@ function _uniqid($_mysql_uniqid,$_cookie_uniqid){
     }
 }
 
+function _set_xml($_xmlfile,$_clean){
+    $_fp = @fopen('new.xml','w');
+    if(!$_fp){
+        exit('系統錯誤，文件不存在！');
+    }
+    
+    flock($_fp,LOCK_EX);
+    
+    $_string = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "<vip>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<id>{$_clean['id']}</id>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<username>{$_clean['username']}</username>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<sex>{$_clean['sex']}</sex>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<face>{$_clean['face']}</face>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<email>{$_clean['email']}</email>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "\t<url>{$_clean['url']}</url>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    $_string = "</vip>\r\n";
+    fwrite($_fp, $_string,strlen($_string));
+    
+    flock($_fp,LOCK_UN);
+    fclose($_fp);
+    
+}
+
 /**
  * 截取字符串
  * @param unknown $_string

@@ -14,6 +14,8 @@ define('IN_TG',true);
 define('SCRIPT','index');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php'; //转换成硬路径，速度更快
+
+$_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face,tg_email,tg_url FROM tg_user ORDER BY tg_reg_time DESC LIMIT 1");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +25,7 @@ require dirname(__FILE__).'/includes/common.inc.php'; //转换成硬路径，速
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>
+<script type="text/javascript" src="js/blog.js"></script>
 </head>
 <body>
 
@@ -36,6 +39,25 @@ require dirname(__FILE__).'/includes/common.inc.php'; //转换成硬路径，速
 
 <div id="user">
 	<h2>新进会员</h2>
+	<?php 
+	   while(!!$_rows = _fetch_array_list($_result)){
+	       $_rows = _html($_rows);
+	?>
+	<dl>
+	   <dd class="user"><?php echo $_rows['tg_username']?>(<?php echo $_rows['tg_sex']?>)</dd>
+	   <dt><img src="<?php echo $_rows['tg_face']; ?>" alt="<?php echo $_rows['tg_username']?>" /></dt>
+	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_rows['tg_id']?>">发消息</a></dd>
+	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_rows['tg_id']?>">加为好友</a></dd>
+	   <dd class="guest">写留言</dd>
+	   <dd class="flower"><a href='javascript:;' name="flower" title="<?php echo $_rows['tg_id']?>">给他送花</a></dd>
+	   <dd class="email">郵件：<?php echo $_rows['tg_email']?></dd>
+	   <dd class="url">網址：<?php echo $_rows['tg_url']?></dd>
+	</dl>
+	<?php }?>
+	
+	<?php 
+	   _free_result($_result);
+	?>
 </div>
 
 <div id="pics">
