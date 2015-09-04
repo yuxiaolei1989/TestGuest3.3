@@ -5,6 +5,83 @@
 	border:2px solid #ccc;
 	float:right;
 }
+#list a.post{
+	display:block;
+	width:114px;
+	height:33px;
+	background:url(../../images/aricle.jpg) no-repeat;
+	text-indent:-99999px;
+	margin:10px 10px 0 auto;
+}
+#list ul.article{
+	padding:0 50px;
+}
+#list ul.article li{
+	height:30px;
+	line-height:30px;
+	border-bottom:1px dashed #333;
+	padding-left:25px;
+}
+#list ul.article li em{
+	float:right;
+	font-style:normal;
+}
+#list ul.article li a{
+	color:#333;
+}
+#list ul.article li a:hover{
+	color:#f60;
+}
+
+#list ul.article li.icon1{
+	background:url(../../images/icon1.gif) no-repeat left center;
+}
+#list ul.article li.icon2{
+	background:url(../../images/icon2.gif) no-repeat left center;
+}
+#list ul.article li.icon3{
+	background:url(../../images/icon3.gif) no-repeat left center;
+}
+#list ul.article li.icon4{
+	background:url(../../images/icon4.gif) no-repeat left center;
+}
+#list ul.article li.icon5{
+	background:url(../../images/icon5.gif) no-repeat left center;
+}
+#list ul.article li.icon6{
+	background:url(../../images/icon6.gif) no-repeat left center;
+}
+#list ul.article li.icon7{
+	background:url(../../images/icon7.gif) no-repeat left center;
+}
+#list ul.article li.icon8{
+	background:url(../../images/icon8.gif) no-repeat left center;
+}
+#list ul.article li.icon9{
+	background:url(../../images/icon9.gif) no-repeat left center;
+}
+#list ul.article li.icon10{
+	background:url(../../images/icon10.gif) no-repeat left center;
+}
+#list ul.article li.icon11{
+	background:url(../../images/icon11.gif) no-repeat left center;
+}
+#list ul.article li.icon12{
+	background:url(../../images/icon12.gif) no-repeat left center;
+}
+#list ul.article li.icon13{
+	background:url(../../images/icon13.gif) no-repeat left center;
+}
+#list ul.article li.icon14{
+	background:url(../../images/icon14.gif) no-repeat left center;
+}
+#list ul.article li.icon15{
+	background:url(../../images/icon15.gif) no-repeat left center;
+}
+#list ul.article li.icon16{
+	background:url(../../images/icon16.gif) no-repeat left center;
+}
+
 #user {
 	width:340px;
 	height:250px;
@@ -21,12 +98,12 @@
 }
 
 #user dl{
-	width:170px;
+	width:190px;
 	margin:0 auto;
 	padding-top:10px;
 }
 #user dl dt{
-	width:150px;
+	width:190px;
 	margin-bottom:5px;
 }
 #user dl dt img{
@@ -34,7 +111,7 @@
 	display:block;
 }
 #user dl dd{
-	width:85px;
+	width:95px;
 	float:left;
 	text-align:center;
 	height:20px;
@@ -45,17 +122,20 @@
 	text-decoration:none;
 }
 #user dl dd.user{
-	width:170px;
+	width:190px;
 	float:none;
 	color:#f60;
 }
 #user dl dd.email,#user dl dd.url{
-	width:170px;
+	width:200px;
 	float:none;
 	clear:both;
 	text-align:left;
 	padding-top:2px;
 	text-indent:5px;
+	text-overflow:ellipsis;
+	word-break:break-all
+	height:25px;
 }
 #user dl dd.message{
 	background:url(../../images/x1.gif) no-repeat 5px 35%;
