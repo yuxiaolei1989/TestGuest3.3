@@ -21,10 +21,23 @@
 #post dl dd {
 	padding:5px 0;
 }
-#post dl dd textarea{
+#ubb{
 	width:410px;
-	height:200px;
+	height:26px;
 	border:1px dashed #333;
+	border-bottom:1px solid #999;
+	background:url(../../images/bgMenubar.gif) repeat-x;
+}
+#ubb img{
+	display:block;
+	float:left;
+	padding:5px 0 0 6px;
+}
+#post dl dd textarea{
+	width:400px;
+	border:1px dashed #333;
+	border-top:none;
+	padding:5px;
 }
 #post dl dd input.text {
 	width:250px;
