@@ -12,70 +12,54 @@ define('SCRIPT','post');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
-if($_GET['action'] == 'register'){
-    
+if(!isset($_COOKIE['username'])){
+    _location("请先登录", "login.php");
+}
+
+if($_GET['action'] == 'post'){
     _check_code($_POST['code'],$_SESSION['code']);
+    
+    $_rows = _fetch_array("SELECT 
+                            tg_uniqid
+                     FROM
+                            tg_user
+                     WHERE
+                            tg_username='{$_COOKIE['username']}'");
+
+    _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
     
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
-    $_clean['uniqid'] = _check_uniqid($_POST['uniqid'],$_SESSION['uniqid']);
-    $_clean['active'] = _sha1_uniqid();
-    $_clean['username'] = _check_username($_POST['username']);
-    $_clean['password'] = _check_password($_POST['password'], $_POST['notpassword'],6);
-    $_clean['question'] = _check_qustion($_POST['question'],2,20);
-    $_clean['answer'] = _check_answer($_POST['question'],$_POST['answer'],2,20);
-    $_clean['sex'] = _check_sex($_POST['sex']);
-    $_clean['face'] = _check_face($_POST['face']);
-    $_clean['email'] = _check_email($_POST['email'],6,40);
-    $_clean['qq'] = _check_qq($_POST['qq']);
-    $_clean['url'] = _check_url($_POST['url'],40);
-    
-    _is_repeat("SELECT tg_username FROM tg_user WHERE tg_username='{$_clean['username']}' LIMIT 1","对不起，此用户已被注册！");
+    $_clean['username'] = $_COOKIE['username'];
+    $_clean['type'] = $_POST['type'];
+    $_clean['title'] = _check_post_title($_POST['title'],2,40);
+    $_clean['content'] = _check_post_content($_POST['content'],2);
+    $_clean = _mysql_string($_clean);
     
     _query(
-        "INSERT INTO tg_user (
-            tg_uniqid,
-            tg_active,
+        "INSERT INTO tg_article (
             tg_username,
-            tg_password,
-            tg_question,
-            tg_answer,
-            tg_sex,
-            tg_face,
-            tg_email,
-            tg_qq,
-            tg_url,
-            tg_reg_time,
-            tg_last_time,
-            tg_last_ip
+            tg_title,
+            tg_type,
+            tg_content,
+            tg_date
         ) VALUES (
-            '{$_clean['uniqid']}',
-            '{$_clean['active']}',
             '{$_clean['username']}',
-            '{$_clean['password']}',
-            '{$_clean['question']}',
-            '{$_clean['answer']}',
-            '{$_clean['sex']}',
-            '{$_clean['face']}',
-            '{$_clean['email']}',
-            '{$_clean['qq']}',
-            '{$_clean['url']}',
-            NOW(),
-            NOW(),
-            '{$_SERVER['REMOTE_ADDR']}'
+            '{$_clean['title']}',
+            '{$_clean['type']}',
+            '{$_clean['content']}',
+            NOW()
     )");
     
     if(_affected_rows() == 1){
         $_clean['id'] = _insert_id();
         _close();
         _session_destroy();
-        
-        _set_xml("new.xml",$_clean);
-        _location("恭喜你注册成功！", "active.php?active=".$_clean['active']);
+        _location("恭喜你帖子发布成功！", "article.php?id=".$_clean['id']);
     }else{
         _close();
         _session_destroy();
-        _location("很遗憾，注册失败了~_~", "register.php");
+        _alert_back("很遗憾，帖子发布失败了~_~");
     }
     
 }
