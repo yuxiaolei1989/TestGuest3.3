@@ -118,3 +118,8 @@
 	vertical-align:middle;
 	cursor:pointer;
 }
+
+#q a{
+	text-decoration:none;
+	color:#333;
+}

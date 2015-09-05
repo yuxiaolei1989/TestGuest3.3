@@ -7,7 +7,19 @@ window.onload = function () {
 		ubbimg = ubb.getElementsByTagName("img"),
 		html = document.getElementsByTagName("html")[0],
 		font = document.getElementById("font"),
-		color = document.getElementById("color");
+		color = document.getElementById("color"),
+		q = document.getElementById('q'),
+		qa = q.getElementsByTagName("a");
+	
+	qa[0].onclick = function(){
+		window.open('q.php?num=48&path=qpic/1/','face','width=410,height=400,top=0,left=0,scrollbars=1');
+	}
+	qa[1].onclick = function(){
+		window.open('q.php?num=10&path=qpic/2/','face','width=410,height=400,top=0,left=0,scrollbars=1');
+	}
+	qa[2].onclick = function(){
+		window.open('q.php?num=39&path=qpic/3/','face','width=410,height=400,top=0,left=0,scrollbars=1');
+	}
 	
 	html.onmouseup = function(){
 		font.style.display = "none";
