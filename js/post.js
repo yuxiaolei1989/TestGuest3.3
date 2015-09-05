@@ -4,10 +4,23 @@ window.onload = function () {
 	
 	var fm = document.getElementsByTagName("form")[0],
 		ubb = document.getElementById("ubb"),
-		ubbimg = ubb.getElementsByTagName("img");
+		ubbimg = ubb.getElementsByTagName("img"),
+		html = document.getElementsByTagName("html")[0],
+		font = document.getElementById("font"),
+		color = document.getElementById("color");
+	
+	html.onmouseup = function(){
+		font.style.display = "none";
+		color.style.display = "none";
+	}
+	
+	fm.t.onmouseup = function(e){
+		e.stopPropagation();
+	}
+	
 	//字体大小
 	ubbimg[0].onclick = function(){
-		
+		font.style.display = "block";
 	}
 	
 	ubbimg[2].onclick = function(){
@@ -21,6 +34,10 @@ window.onload = function () {
 	}
 	ubbimg[5].onclick = function(){
 		content("[s][/s]");
+	}
+	
+	ubbimg[7].onclick = function(){
+		color.style.display = "block";
 	}
 	
 	ubbimg[8].onclick = function(){
@@ -75,4 +92,23 @@ window.onload = function () {
 	function content(string){
 		fm.content.value += string;
 	}
+	
+	fm.t.onblur = function(){
+		if(this.value != "" && this.value != "#"){
+			showcolor(this.value);
+		}
+		
+	}
+	
 };
+
+
+function font(size){
+	var fm = document.getElementsByTagName("form")[0];
+	fm.content.value += "[size="+size+"][/size]";
+}
+
+function showcolor(value){
+	var fm = document.getElementsByTagName("form")[0];
+	fm.content.value += "[color="+value+"][/color]";
+}
