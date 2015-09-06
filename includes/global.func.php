@@ -331,4 +331,27 @@ function _code($_width=75,$_height=25,$_rnd_num=4,$_flag=false){
     
     imagedestroy($_img);
 }
+
+
+function _ubb($_string){
+    $_string = nl2br($_string);
+    $_string = preg_replace('/\[size=(.*)\](.*)\[\/size\]/U', '<span style="font-size:\1px;">\2</span>', $_string);
+    $_string = preg_replace('/\[color=(.*)\](.*)\[\/color\]/U', '<span style="color:\1">\2</span>', $_string);
+    $_string = preg_replace('/\[b\](.*)\[\/b\]/U', '<strong>\1</strong>', $_string);
+    
+    $_string = preg_replace('/\[i\](.*)\[\/i\]/U', '<i>\1</i>', $_string);
+    
+    $_string = preg_replace('/\[u\](.*)\[\/u\]/U', '<u>\1</u>', $_string);
+    
+    $_string = preg_replace('/\[s\](.*)\[\/s\]/U', '<s>\1</s>', $_string);
+    
+    $_string = preg_replace('/\[url\](.*)\[\/url\]/U', '<a href="\1" target="_blank">\1</a>', $_string);
+    
+    $_string = preg_replace('/\[img\](.*)\[\/img\]/U', '<img src="\1" />', $_string);
+    
+    $_string = preg_replace('/\[email\](.*)\[\/email\]/U', '<a href="mailto:\1" target="_blank">\1</a>', $_string);
+    
+    $_string = preg_replace('/\[flash\](.*)\[\/flash\]/U', '<embed src="\1" style="width:480px; height:400px;" />', $_string);
+    return $_string;
+}
 ?>

@@ -56,7 +56,7 @@ window.onload = function () {
 		var url = prompt("请输入网址：","http://");
 		if(url){
 			if(/^https?:\/\/(\w+\.)?[\w\-\.]+(\.\w+)+$/.test(url)){
-				content("[b]"+url+"[/b]");
+				content("[url]"+url+"[/url]");
 			}else{
 				alert("网址输入错误！");
 			}
@@ -79,13 +79,16 @@ window.onload = function () {
 	
 	ubbimg[10].onclick = function(){
 		var img = prompt("请输入图片地址：","");
-		content('[img]'+img+'[/img]')	
+		if(img){
+			content('[img]'+img+'[/img]');
+		}
+			
 	}
 	
 	ubbimg[11].onclick = function(){
 		var flash = prompt("请输入flash网址：","http://");
 		if(flash){
-			if(/^https?:\/\/(\w+\.)?[\w\-\.]+(\.\w+)+$/.test(flash)){
+			if(/^https?:\/\/(\w+\.)?[\w\-\.]+(\.\w+)+/.test(flash)){
 				content("[flash]"+flash+"[/flash]");
 			}else{
 				alert("flash网址输入错误！");

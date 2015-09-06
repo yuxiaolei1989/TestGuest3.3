@@ -27,7 +27,14 @@ if(isset($_GET['id'])){
                             WHERE 
                                 tg_id='{$_GET['id']}'
                         ");
+    _query("UPDATE
+                tg_article
+            SET
+                tg_readcount = tg_readcount+1
+            WHERE
+                tg_id='{$_GET['id']}'");
     $_rows = _html($_rows);
+    $_rows['tg_content'] = _ubb($_rows['tg_content']);
     if(!!$_rows){
         $_result = _query("SELECT 
                                 tg_id,
@@ -89,7 +96,7 @@ if(isset($_GET['id'])){
             </div>
             <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
-                <?php echo $_rows['tg_content']?>
+                <?php echo $_rows['tg_content'];?>
             </div>
             <div class="read">
                                             浏览量（<?php echo $_rows['tg_readcount']?>） 评论数（<?php echo $_rows['tg_commendcount']?>）
