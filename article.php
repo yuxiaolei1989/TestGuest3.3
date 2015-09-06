@@ -12,9 +12,46 @@ define('SCRIPT','article');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
-$_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face,tg_email,tg_url FROM tg_user WHERE tg_username='{$_COOKIE['username']}' LIMIT 1");
+if(isset($_GET['id'])){
+    $_rows = _fetch_array("SELECT 
+                                tg_id,
+                                tg_username,
+                                tg_type,
+                                tg_title,
+                                tg_content,
+                                tg_readcount,
+                                tg_commendcount,
+                                tg_date
+                            FROM 
+                                tg_article 
+                            WHERE 
+                                tg_id='{$_GET['id']}'
+                        ");
+    $_rows = _html($_rows);
+    if(!!$_rows){
+        $_result = _query("SELECT 
+                                tg_id,
+                                tg_username,
+                                tg_sex,
+                                tg_face,
+                                tg_email,
+                                tg_url 
+                            FROM 
+                                tg_user 
+                            WHERE 
+                                tg_username='{$_rows['tg_username']}' 
+                            LIMIT 
+                                1
+                            ");
+        $_html = _html(_fetch_array_list($_result));
+    }else{
+        _alert_back("不存在这个帖子！");
+    }
+    
+}else{
+    _alert_back("非法操作！");
+}
 
-$_html = _html(_fetch_array_list($_result));
 
 
 ?>
@@ -48,11 +85,14 @@ $_html = _html(_fetch_array_list($_result));
     	</dl>
         <div id="content">
             <div class="user">
-                <span>1#</span><?php echo $_html['tg_username']?> | 
+                <span>1#</span><?php echo $_html['tg_username']?> | <?php echo $_rows['tg_date']?>
             </div>
-            <h3>主题：天上掉下馅饼《游戏人生》变装拿大奖 <img src="images/icon10.gif" alt="" /></h3>
+            <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
-            天上又掉馅饼了！《游戏人生》天降仙女，天降忍者，天降甲壳虫轿车……各种神仙异侠附体大行动！漂亮护士MM，超级忍者，魔幻厨师，功夫小子，埃及僵尸，变形金刚……想变什么就变什么，当侠客，还是当神仙？还是当一个科学异侠？你自己灵活选择啦！众多奇幻华丽的变身道具让你享受史上超震撼的无厘头刺激！同时各种神秘的惊喜大奖等你来拿喔！
+                <?php echo $_rows['tg_content']?>
+            </div>
+            <div class="read">
+                                            浏览量（<?php echo $_rows['tg_readcount']?>） 评论数（<?php echo $_rows['tg_commendcount']?>）
             </div>
         </div>
 	</div>

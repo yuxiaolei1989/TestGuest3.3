@@ -100,6 +100,11 @@
 	clear:both;
 	border-bottom:1px dashed #333;
 }
+#article .read{
+	font-size:14px;
+	color:#666;
+	line-height:35px;
+}
 
 
 
