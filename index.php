@@ -17,6 +17,11 @@ require dirname(__FILE__).'/includes/common.inc.php'; //转换成硬路径，速
 
 $_html = _html(_get_xml("new.xml"));
 
+global $_pagesize,$_pagenum;
+_page("SELECT tg_id FROM tg_article", 1);
+
+$_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FROM tg_article ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -38,8 +43,16 @@ $_html = _html(_get_xml("new.xml"));
 	<h2>帖子列表</h2>
 	<a href="post.php" class="post">发表帖子</a>
 	<ul class="article">
-	   <li class="icon1"><em>阅读数（<strong>72</strong>） 评论数（<strong>2</strong>）</em> <a href="#">创意时代：解密QQ仙侠传美术创意设计</a></li>
+	   <?php 
+	       while(!!$_rows = _fetch_array_list($_result)){
+	           echo '<li class="icon'.$_rows['tg_type'].'"><em>阅读数（<strong>'.$_rows['tg_readcount'].'</strong>） 评论数（<strong>'.$_rows['tg_commendcount'].'</strong>）</em> <a href="article.php?id='.$_rows['tg_id'].'">'._title($_rows['tg_title'],20).'</a></li>';
+	       }
+	   ?>
 	</ul>
+	<?php 
+	   _free_result($_result);
+	   _paging(4)
+	?>
 </div>
 
 <div id="user">

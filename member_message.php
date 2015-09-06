@@ -101,9 +101,9 @@ $_result = _query("SELECT
                     <a href="member_message_detail.php?id=<?php echo $_rows['tg_id']?>" title="<?php echo $_rows['tg_content']?>">
                         <?php
                             if(empty($_rows['tg_state'])){
-                                echo "<strong>"._title($_rows['tg_content'])."</strong>";
+                                echo "<strong>"._title($_rows['tg_content'],14)."</strong>";
                             }else{
-                                echo _title($_rows['tg_content']);
+                                echo _title($_rows['tg_content'],14);
                             }
                             
                         ?>

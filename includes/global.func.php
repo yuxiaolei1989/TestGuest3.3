@@ -137,9 +137,9 @@ function _set_xml($_xmlfile,$_clean){
  * @param unknown $_string
  * @return string
  */
-function _title($_string){
-    if(mb_strlen($_string,'utf-8') > 14){
-        $_string = mb_substr($_string,1,14,'utf-8')."...";
+function _title($_string,$_num){
+    if(mb_strlen($_string,'utf-8') > $_num){
+        $_string = mb_substr($_string,1,$_num,'utf-8')."...";
     }
     return $_string;
 }

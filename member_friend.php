@@ -144,9 +144,9 @@ $_result = _query("SELECT
                <td>
                     <?php
                         if(empty($_rows['tg_state'])){
-                            echo "<strong>"._title($_rows['tg_content'])."</strong>";
+                            echo "<strong>"._title($_rows['tg_content'],14)."</strong>";
                         }else{
-                            echo _title($_rows['tg_content']);
+                            echo _title($_rows['tg_content'],14);
                         }
                     ?>
                </td>
