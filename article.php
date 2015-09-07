@@ -70,7 +70,8 @@ if(isset($_GET['id'])){
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>
-<script type="text/javascript" src="js/blog.js"></script>
+<script type="text/javascript" src="js/code.js"></script>
+<script type="text/javascript" src="js/article.js"></script>
 </head>
 <body>
 <?php 
@@ -80,7 +81,7 @@ if(isset($_GET['id'])){
 <div id="article">
 	<h2>帖子详情</h2>
 	<div id="subject">
-    	<dl>
+    	<dl class="">
     	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
     	   <dt><img src="<?php echo $_html['tg_face']; ?>" alt="<?php echo $_html['tg_username']?>" /></dt>
     	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_html['tg_id']?>">发消息</a></dd>
@@ -104,6 +105,19 @@ if(isset($_GET['id'])){
         </div>
 	</div>
 	<p class="line"></p>
+	<?php if($_COOKIE['username']){?>
+	<form method="post" name="post" action="?action=rearticle">
+		<dl class="reply">
+			<dd>标　　题：<input type="text" name="title" class="text" value="RE:<?php echo $_rows['tg_title']?>" /> (*必填，至少两位)</dd>
+			<dd id="q">贴　　图：<a href="javascript:;">Q图系列[1]</a> <a href="javascript:;">Q图系列[2]</a> <a href="javascript:;">Q图系列[3]</a></dd>
+			<dd>
+			     <?php include ROOT_PATH.'includes/ubb.inc.php';?>
+			     <textarea name="content" rows="9"></textarea>
+			</dd>
+			<dd>验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" alt="验证码" id="code" /> <input type="submit" class="submit" id="submit" value="发表帖子" /></dd>
+		</dl>
+	</form>
+	<?php }?>
 </div>
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';

@@ -10,37 +10,37 @@
 	text-align:center;
 }
 
-#article dl{
+#subject dl{
 	width:190px;
 	padding-top:10px;
 	padding-left:45px;
 	float:left;
 }
-#article dl dt{
+#subject dl dt{
 	width:190px;
 	margin-bottom:5px;
 }
-#article dl dt img{
+#subject dl dt img{
 	margin:0 auto;
 	display:block;
 }
-#article dl dd{
+#subject dl dd{
 	width:95px;
 	float:left;
 	text-align:center;
 	height:20px;
 	line-height:20px;
 }
-#article dl dd a{
+#subject dl dd a{
 	color:#333;
 	text-decoration:none;
 }
-#article dl dd.user{
+#subject dl dd.user{
 	width:190px;
 	float:none;
 	color:#f60;
 }
-#article dl dd.email,#article dl dd.url{
+#subject dl dd.email,#subject dl dd.url{
 	width:200px;
 	float:none;
 	clear:both;
@@ -51,16 +51,16 @@
 	word-break:break-all
 	height:25px;
 }
-#article dl dd.message{
+#subject dl dd.message{
 	background:url(../../images/x1.gif) no-repeat 5px 35%;
 }
-#article dl dd.friend{
+#subject dl dd.friend{
 	background:url(../../images/x2.gif) no-repeat left 35%;
 }
-#article dl dd.guest{
+#subject dl dd.guest{
 	background:url(../../images/x3.gif) no-repeat 5px 35%;
 }
-#article dl dd.flower{
+#subject dl dd.flower{
 	background:url(../../images/x4.gif) no-repeat left 35%;
 }
 
@@ -104,6 +104,121 @@
 	font-size:14px;
 	color:#666;
 	line-height:35px;
+}
+
+#article dl.reply {
+	width:450px;
+	margin:0 auto;
+}
+#article dl.reply dt {
+	text-align:center;
+	padding:10px 0;
+	font-weight:bold;
+}
+#article dl.reply dd {
+	padding:5px 0;
+	position:relative;
+}
+#ubb{
+	width:410px;
+	height:26px;
+	border:1px dashed #333;
+	border-bottom:1px solid #999;
+	background:url(../../images/bgMenubar.gif) repeat-x;
+}
+#ubb img{
+	display:block;
+	float:left;
+	padding:5px 0 0 6px;
+}
+
+#font{
+	width:130px;
+	height:40px;
+	background:#eee;
+	border:1px dashed #333;
+	padding:8px;
+	line-height:20px;
+	position:absolute;
+	left:0;
+	top:33px;
+	display:none;
+}
+#font strong{
+	font-weight:normal;
+	background:#fff;
+	border:1px solid #ccc;
+	cursor:default;
+}
+#color{
+	width:152px;
+	height:130px;
+	font-size:12px;
+	background:#eee;
+	border:1px dashed #333;
+	padding:4px 0 0 4px;
+	position:absolute;
+	top:33px;
+	left:129px;
+	display:none;
+}
+#color strong{
+	display:block;
+	border:1px solid #999;
+	width:12px;
+	height:12px;
+	float:left;
+	margin:4px 0 0 4px;
+}
+#color em{
+	display:block;
+	width:80%;
+	height:28px;
+	clear:both;
+}
+#color em input{
+	margin-top:10px;
+	margin:left:4px;
+	width:136px;
+	height:20px;
+	cursor:pointer;
+	background:#fff;
+}
+#article dl dd textarea{
+	width:400px;
+	border:1px dashed #333;
+	border-top:none;
+	padding:5px;
+}
+#article dl.reply dd input.text {
+	width:250px;
+	height:19px;
+	border:1px dashed #333;
+	background:#fff;
+}
+#article dl.reply dd input.yzm {
+	width:60px;
+	vertical-align:middle;
+}
+#article dl.reply dd input.submit {
+	width:75px;
+	height:21px;
+	border:1px dashed #333;
+	background:#fff;
+	cursor:pointer;
+	margin:0 0 0 20px;
+}
+#article dl.reply dd input.submit:hover{
+	background:#eee;
+}
+#article dl.reply dd img#code{
+	vertical-align:middle;
+	cursor:pointer;
+}
+
+#q a{
+	text-decoration:none;
+	color:#333;
 }
 
 

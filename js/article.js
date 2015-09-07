@@ -1,6 +1,27 @@
-//等在网页加载完毕再执行
-window.onload = function () {
-	code();
+window.onload = function(){
+	var message = document.getElementsByName('message'),
+		friend = document.getElementsByName('friend'),
+		flower = document.getElementsByName('flower');
+
+	for(var i=0;i<message.length; i++){
+		message[i].onclick = function(){
+			centerWindow("message.php?id="+this.title,'message',250,400);
+		}
+	}
+	
+	for(var i=0;i<friend.length; i++){
+		friend[i].onclick = function(){
+			centerWindow("friend.php?id="+this.title,'friend',250,400);
+		}
+	}
+	
+	for(var i=0;i<flower.length; i++){
+		flower[i].onclick = function(){
+			centerWindow("flower.php?id="+this.title,'flower',250,400);
+		}
+	}
+	
+code();
 	
 	var fm = document.getElementsByTagName("form")[0],
 		ubb = document.getElementById("ubb"),
@@ -10,7 +31,7 @@ window.onload = function () {
 		color = document.getElementById("color"),
 		q = document.getElementById('q'),
 		qa = q.getElementsByTagName("a");
-
+	
 	fm.onsubmit = function(){	
 		var title = fm.title.value;
 		if(title.length <2 || title.length > 40){
@@ -142,10 +163,7 @@ window.onload = function () {
 		}
 		
 	}
-	
-};
-
-
+}
 function font(size){
 	var fm = document.getElementsByTagName("form")[0];
 	fm.content.value += "[size="+size+"][/size]";
@@ -154,4 +172,11 @@ function font(size){
 function showcolor(value){
 	var fm = document.getElementsByTagName("form")[0];
 	fm.content.value += "[color="+value+"][/color]";
+}
+
+
+function centerWindow(url,name,height,width){
+	var top=(screen.height - height) / 2;
+	var left = (screen.width - width) / 2;
+	window.open(url,name,"height="+height+",width="+width+",top="+top+",left="+left);
 }

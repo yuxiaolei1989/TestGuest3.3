@@ -18,7 +18,7 @@ require dirname(__FILE__).'/includes/common.inc.php'; //转换成硬路径，速
 $_html = _html(_get_xml("new.xml"));
 
 global $_pagesize,$_pagenum;
-_page("SELECT tg_id FROM tg_article", 1);
+_page("SELECT tg_id FROM tg_article", 15);
 
 $_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FROM tg_article ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
 
