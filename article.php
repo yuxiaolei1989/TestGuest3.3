@@ -12,6 +12,56 @@ define('SCRIPT','article');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
+if($_GET['action'] == 'rearticle'){
+    _check_code($_POST['code'],$_SESSION['code']);
+    
+    $_rows = _fetch_array("SELECT
+        tg_uniqid
+        FROM
+        tg_user
+        WHERE
+        tg_username='{$_COOKIE['username']}'");
+    
+    _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+    
+    include ROOT_PATH.'includes/check.func.php';
+    $_clean = array();
+    $_clean['username'] = $_COOKIE['username'];
+    $_clean['reid'] = $_POST['reid'];
+    $_clean['type'] = $_POST['type'];
+    $_clean['title'] = _check_post_title($_POST['title'],2,40);
+    $_clean['content'] = _check_post_content($_POST['content'],10);
+    $_clean = _mysql_string($_clean);
+    
+    _query(
+        "INSERT INTO tg_article (
+        tg_username,
+        tg_reid,
+        tg_title,
+        tg_type,
+        tg_content,
+        tg_date
+    ) VALUES (
+        '{$_clean['username']}',
+        '{$_clean['reid']}',
+        '{$_clean['title']}',
+        '{$_clean['type']}',
+        '{$_clean['content']}',
+        NOW()
+    )");
+    
+    if(_affected_rows() == 1){
+        $_clean['id'] = _insert_id();
+        _close();
+        _session_destroy();
+        _location("恭喜你回复发布成功！", "article.php?id=".$_clean['reid']);
+    }else{
+        _close();
+        _session_destroy();
+        _alert_back("很遗憾，帖子回复发布失败了~_~");
+    }
+}
+
 if(isset($_GET['id'])){
     $_rows = _fetch_array("SELECT 
                                 tg_id,
@@ -26,15 +76,22 @@ if(isset($_GET['id'])){
                                 tg_article 
                             WHERE 
                                 tg_id='{$_GET['id']}'
+                            AND
+                                tg_reid=0
                         ");
-    _query("UPDATE
-                tg_article
+    if($_rows){
+        _query("UPDATE
+            tg_article
             SET
-                tg_readcount = tg_readcount+1
+            tg_readcount = tg_readcount+1
             WHERE
-                tg_id='{$_GET['id']}'");
-    $_rows = _html($_rows);
-    $_rows['tg_content'] = _ubb($_rows['tg_content']);
+            tg_id='{$_GET['id']}'");
+        $_rows = _html($_rows);
+        $_rows['tg_content'] = _ubb($_rows['tg_content']);
+    }else{
+        _alert_back("不存在这个帖子！");
+    }
+    
     if(!!$_rows){
         $_result = _query("SELECT 
                                 tg_id,
@@ -80,7 +137,7 @@ if(isset($_GET['id'])){
 
 <div id="article">
 	<h2>帖子详情</h2>
-	<div id="subject">
+	<div class="subject" id="subject">
     	<dl class="">
     	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
     	   <dt><img src="<?php echo $_html['tg_face']; ?>" alt="<?php echo $_html['tg_username']?>" /></dt>
@@ -105,6 +162,28 @@ if(isset($_GET['id'])){
         </div>
 	</div>
 	<p class="line"></p>
+	<div class="subject">
+    	<dl>
+    	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
+    	   <dt><img src="<?php echo $_html['tg_face']; ?>" alt="<?php echo $_html['tg_username']?>" /></dt>
+    	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_html['tg_id']?>">发消息</a></dd>
+    	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_html['tg_id']?>">加为好友</a></dd>
+    	   <dd class="guest">写留言</dd>
+    	   <dd class="flower"><a href='javascript:;' name="flower" title="<?php echo $_html['tg_id']?>">给他送花</a></dd>
+    	   <dd class="email">郵件：<a href="mailto:<?php echo $_html['tg_email']?>"><?php echo $_html['tg_email']?></a></dd>
+    	   <dd class="url">網址：<a href="<?php echo $_html['tg_url']?>" target="_blank"><?php echo $_html['tg_url']?></a></dd>
+    	</dl>
+        <div id="content">
+            <div class="user">
+                <span>1#</span><?php echo $_html['tg_username']?> | <?php echo $_rows['tg_date']?>
+            </div>
+            <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
+            <div class="detail">
+                <?php echo $_rows['tg_content'];?>
+            </div>
+        </div>
+	</div>
+	<p class="line"></p>
 	<?php if($_COOKIE['username']){?>
 	<form method="post" name="post" action="?action=rearticle">
 		<dl class="reply">
@@ -116,6 +195,8 @@ if(isset($_GET['id'])){
 			</dd>
 			<dd>验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" alt="验证码" id="code" /> <input type="submit" class="submit" id="submit" value="发表帖子" /></dd>
 		</dl>
+		<input type="hidden" name="reid" value="<?php echo $_rows['tg_id'];?>" />
+		<input type="hidden" name="type" value="<?php echo $_rows['tg_type'];?>" />
 	</form>
 	<?php }?>
 </div>

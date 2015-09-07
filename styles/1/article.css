@@ -10,37 +10,37 @@
 	text-align:center;
 }
 
-#subject dl{
+.subject dl{
 	width:190px;
 	padding-top:10px;
 	padding-left:45px;
 	float:left;
 }
-#subject dl dt{
+.subject dl dt{
 	width:190px;
 	margin-bottom:5px;
 }
-#subject dl dt img{
+.subject dl dt img{
 	margin:0 auto;
 	display:block;
 }
-#subject dl dd{
+.subject dl dd{
 	width:95px;
 	float:left;
 	text-align:center;
 	height:20px;
 	line-height:20px;
 }
-#subject dl dd a{
+.subject dl dd a{
 	color:#333;
 	text-decoration:none;
 }
-#subject dl dd.user{
+.subject dl dd.user{
 	width:190px;
 	float:none;
 	color:#f60;
 }
-#subject dl dd.email,#subject dl dd.url{
+.subject dl dd.email,.subject dl dd.url{
 	width:200px;
 	float:none;
 	clear:both;
@@ -51,16 +51,16 @@
 	word-break:break-all
 	height:25px;
 }
-#subject dl dd.message{
+.subject dl dd.message{
 	background:url(../../images/x1.gif) no-repeat 5px 35%;
 }
-#subject dl dd.friend{
+.subject dl dd.friend{
 	background:url(../../images/x2.gif) no-repeat left 35%;
 }
-#subject dl dd.guest{
+.subject dl dd.guest{
 	background:url(../../images/x3.gif) no-repeat 5px 35%;
 }
-#subject dl dd.flower{
+.subject dl dd.flower{
 	background:url(../../images/x4.gif) no-repeat left 35%;
 }
 

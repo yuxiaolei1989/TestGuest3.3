@@ -20,7 +20,7 @@ $_html = _html(_get_xml("new.xml"));
 global $_pagesize,$_pagenum;
 _page("SELECT tg_id FROM tg_article", 15);
 
-$_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FROM tg_article ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
+$_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FROM tg_article WHERE tg_reid=0 ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
