@@ -89,6 +89,9 @@ if(isset($_GET['id'])){
         $_rows = _html($_rows);
         $_rows['tg_content'] = _ubb($_rows['tg_content']);
         
+        global $_id;
+        $_id = 'id='.$_GET['id'].'&';
+        
         $_result = _query("SELECT
             tg_id,
             tg_username,
@@ -107,7 +110,7 @@ if(isset($_GET['id'])){
         
         
         global $_pagesize,$_pagenum;
-        _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 10);
+        _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 2);
         
         $_re = _query("SELECT
                             tg_username,
@@ -155,6 +158,7 @@ if(isset($_GET['id'])){
 
 <div id="article">
 	<h2>帖子详情</h2>
+	<?php if($_page == 1){?>
 	<div class="subject" id="subject">
     	<dl class="">
     	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
@@ -180,6 +184,8 @@ if(isset($_GET['id'])){
         </div>
 	</div>
 	<p class="line"></p>
+	<?php }?>
+	
 	<?php 
 	   while(!!$_rows2 = _fetch_array_list($_re)){
 	       $_rows2 = _html($_rows2);

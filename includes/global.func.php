@@ -185,15 +185,15 @@ function _page($_sql,$_size){
  */
 function _paging($_type){
     echo '<link rel="stylesheet" type="text/css" href="styles/1/page.css">';
-    global $_page,$_pageabsolute,$_num;
+    global $_page,$_pageabsolute,$_num,$_id;
     if($_type == 1){
        echo '<div id="page_num">
             <ul>';
         	       for($i=0;$i<$_pageabsolute;$i++){
         	           if($_page == $i+1){
-        	              echo '<li><a href="'.SCRIPT.'.php?page='.($i+1).'" class="selected">' .($i+1). '</a></li>';
+        	              echo '<li><a href="'.SCRIPT.'.php?'.$_id.'page='.($i+1).'" class="selected">' .($i+1). '</a></li>';
         	           }else{
-        	              echo '<li><a href="'.SCRIPT.'.php?page='.($i+1).'">' .($i+1).' </a></li>';
+        	              echo '<li><a href="'.SCRIPT.'.php?'.$_id.'page='.($i+1).'">' .($i+1).' </a></li>';
         	           }
         	       
         	        }
@@ -210,15 +210,15 @@ function _paging($_type){
         	                     <li>上一页 |</li>";
         	           }else{
         	               echo "<li><a href='".SCRIPT.".php'>首页</a> |</li>
-        	                     <li><a href='".SCRIPT.".php?page=".($_page -1)."'>上一页</a> |</li>";
+        	                     <li><a href='".SCRIPT.".php?'.$_id.'page=".($_page -1)."'>上一页</a> |</li>";
         	           }
         	           
         	           if($_page == $_pageabsolute){
         	               echo "<li>下一页 |</li>
         	                     <li>尾页 |</li>";
         	           }else{
-        	               echo "<li><a href='".SCRIPT.".php?page=".($_page+1)."'>下一页</a> |</li>
-        	                     <li><a href='".SCRIPT.".php?page=".$_pageabsolute."'>尾页</a> |</li>";
+        	               echo "<li><a href='".SCRIPT.".php?'.$_id.'page=".($_page+1)."'>下一页</a> |</li>
+        	                     <li><a href='".SCRIPT.".php?'.$_id.'page=".$_pageabsolute."'>尾页</a> |</li>";
         	           }
         	      
         	       
