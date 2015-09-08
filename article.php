@@ -51,7 +51,12 @@ if($_GET['action'] == 'rearticle'){
     )");
     
     if(_affected_rows() == 1){
-        $_clean['id'] = _insert_id();
+        _query("UPDATE
+                    tg_article
+                SET
+                    tg_commendcount=tg_commendcount + 1
+                WHERE
+                    tg_id = '{$_clean['reid']}'");
         _close();
         _session_destroy();
         _location("恭喜你回复发布成功！", "article.php?id=".$_clean['reid']);
@@ -107,10 +112,10 @@ if(isset($_GET['id'])){
             1
             ");
         $_html = _html(_fetch_array_list($_result));
+        $_html['tg_username_floor'] =$_html['tg_username']. '(楼主)';
         
-        
-        global $_pagesize,$_pagenum;
-        _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 2);
+        global $_pagesize,$_pagenum,$_page;
+        _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 10);
         
         $_re = _query("SELECT
                             tg_username,
@@ -158,10 +163,10 @@ if(isset($_GET['id'])){
 
 <div id="article">
 	<h2>帖子详情</h2>
-	<?php if($_page == 1){?>
+	<?php if($_page == 1 || $_page == 0){?>
 	<div class="subject" id="subject">
     	<dl class="">
-    	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
+    	   <dd class="user"><?php echo $_html['tg_username_floor']?>(<?php echo $_html['tg_sex']?>)</dd>
     	   <dt><img src="<?php echo $_html['tg_face']; ?>" alt="<?php echo $_html['tg_username']?>" /></dt>
     	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_html['tg_id']?>">发消息</a></dd>
     	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_html['tg_id']?>">加为好友</a></dd>
@@ -172,7 +177,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span>1#</span><?php echo $_html['tg_username']?> | <?php echo $_rows['tg_date']?>
+                <span>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
@@ -187,6 +192,7 @@ if(isset($_GET['id'])){
 	<?php }?>
 	
 	<?php 
+	   $_i = 2+$_pagesize * ($_page - 1);
 	   while(!!$_rows2 = _fetch_array_list($_re)){
 	       $_rows2 = _html($_rows2);
 	       $_rows2['tg_content'] = _ubb($_rows2['tg_content']);
@@ -206,6 +212,14 @@ if(isset($_GET['id'])){
 	           1
 	           ");
 	       $_html2 = _html(_fetch_array_list($_result2));
+	       if($_i == 2){
+	           if($_html2['tg_username'] != $_html['tg_username']){
+	               $_html2['tg_username'] .= '(沙发)';
+	           }else{
+	               $_html2['tg_username'] .= '(楼主)';
+	           } 
+	       }
+	       
 	?>
 	<div class="subject">
     	<dl>
@@ -220,7 +234,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span>1#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
+                <span><?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
@@ -229,8 +243,9 @@ if(isset($_GET['id'])){
         </div>
 	</div>
 	<p class="line"></p>
-	<?php }?>
 	<?php 
+	   $_i++;
+	   }
 	   _free_result($_re);
 	   _paging(1)
 	?>
