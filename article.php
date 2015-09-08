@@ -79,7 +79,7 @@ if(isset($_GET['id'])){
                             AND
                                 tg_reid=0
                         ");
-    if($_rows){
+    if(!!$_rows){
         _query("UPDATE
             tg_article
             SET
@@ -88,26 +88,44 @@ if(isset($_GET['id'])){
             tg_id='{$_GET['id']}'");
         $_rows = _html($_rows);
         $_rows['tg_content'] = _ubb($_rows['tg_content']);
-    }else{
-        _alert_back("不存在这个帖子！");
-    }
-    
-    if(!!$_rows){
-        $_result = _query("SELECT 
-                                tg_id,
-                                tg_username,
-                                tg_sex,
-                                tg_face,
-                                tg_email,
-                                tg_url 
-                            FROM 
-                                tg_user 
-                            WHERE 
-                                tg_username='{$_rows['tg_username']}' 
-                            LIMIT 
-                                1
-                            ");
+        
+        $_result = _query("SELECT
+            tg_id,
+            tg_username,
+            tg_sex,
+            tg_face,
+            tg_email,
+            tg_url
+            FROM
+            tg_user
+            WHERE
+            tg_username='{$_rows['tg_username']}'
+            LIMIT
+            1
+            ");
         $_html = _html(_fetch_array_list($_result));
+        
+        
+        global $_pagesize,$_pagenum;
+        _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 10);
+        
+        $_re = _query("SELECT
+                            tg_username,
+                            tg_type,
+                            tg_title,
+                            tg_content,
+                            tg_date
+                        FROM 
+                            tg_article 
+                        WHERE 
+                            tg_reid='{$_GET['id']}' 
+                        ORDER BY 
+                            tg_date 
+                        ASC 
+                        LIMIT 
+                            $_pagenum,$_pagesize
+                    ");
+        
     }else{
         _alert_back("不存在这个帖子！");
     }
@@ -162,28 +180,54 @@ if(isset($_GET['id'])){
         </div>
 	</div>
 	<p class="line"></p>
+	<?php 
+	   while(!!$_rows2 = _fetch_array_list($_re)){
+	       $_rows2 = _html($_rows2);
+	       $_rows2['tg_content'] = _ubb($_rows2['tg_content']);
+	       
+	       $_result2 = _query("SELECT
+	           tg_id,
+	           tg_username,
+	           tg_sex,
+	           tg_face,
+	           tg_email,
+	           tg_url
+	           FROM
+	           tg_user
+	           WHERE
+	           tg_username='{$_rows2['tg_username']}'
+	           LIMIT
+	           1
+	           ");
+	       $_html2 = _html(_fetch_array_list($_result2));
+	?>
 	<div class="subject">
     	<dl>
-    	   <dd class="user"><?php echo $_html['tg_username']?>(<?php echo $_html['tg_sex']?>)</dd>
-    	   <dt><img src="<?php echo $_html['tg_face']; ?>" alt="<?php echo $_html['tg_username']?>" /></dt>
-    	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_html['tg_id']?>">发消息</a></dd>
-    	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_html['tg_id']?>">加为好友</a></dd>
+    	   <dd class="user"><?php echo $_html2['tg_username']?>(<?php echo $_html2['tg_sex']?>)</dd>
+    	   <dt><img src="<?php echo $_html2['tg_face']; ?>" alt="<?php echo $_html2['tg_username']?>" /></dt>
+    	   <dd class="message"><a href='javascript:;' name="message" title="<?php echo $_html2['tg_id']?>">发消息</a></dd>
+    	   <dd class="friend"><a href='javascript:;' name="friend" title="<?php echo $_html2['tg_id']?>">加为好友</a></dd>
     	   <dd class="guest">写留言</dd>
-    	   <dd class="flower"><a href='javascript:;' name="flower" title="<?php echo $_html['tg_id']?>">给他送花</a></dd>
-    	   <dd class="email">郵件：<a href="mailto:<?php echo $_html['tg_email']?>"><?php echo $_html['tg_email']?></a></dd>
-    	   <dd class="url">網址：<a href="<?php echo $_html['tg_url']?>" target="_blank"><?php echo $_html['tg_url']?></a></dd>
+    	   <dd class="flower"><a href='javascript:;' name="flower" title="<?php echo $_html2['tg_id']?>">给他送花</a></dd>
+    	   <dd class="email">郵件：<a href="mailto:<?php echo $_html2['tg_email']?>"><?php echo $_html2['tg_email']?></a></dd>
+    	   <dd class="url">網址：<a href="<?php echo $_html2['tg_url']?>" target="_blank"><?php echo $_html2['tg_url']?></a></dd>
     	</dl>
         <div id="content">
             <div class="user">
-                <span>1#</span><?php echo $_html['tg_username']?> | <?php echo $_rows['tg_date']?>
+                <span>1#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
             </div>
-            <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
+            <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
-                <?php echo $_rows['tg_content'];?>
+                <?php echo $_rows2['tg_content'];?>
             </div>
         </div>
 	</div>
 	<p class="line"></p>
+	<?php }?>
+	<?php 
+	   _free_result($_re);
+	   _paging(1)
+	?>
 	<?php if($_COOKIE['username']){?>
 	<form method="post" name="post" action="?action=rearticle">
 		<dl class="reply">

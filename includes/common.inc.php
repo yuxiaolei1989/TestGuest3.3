@@ -14,6 +14,7 @@ header('Content-Type:text/html;charset=utf-8;');
 //转换硬路径常量
 define('ROOT_PATH',substr(dirname(__FILE__),0,-8));
 
+//定义是否開啟自動转义功能常量
 define('GPC',get_magic_quotes_gpc());
 
 //拒绝PHP低版本
