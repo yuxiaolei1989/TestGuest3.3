@@ -112,6 +112,10 @@ if(isset($_GET['id'])){
         $_html = _html(_fetch_array_list($_result));
         $_html['tg_username_floor'] =$_html['tg_username']. '(楼主)';
         
+        if(isset($_COOKIE['username'])){
+            $_html['reply'] = '<a href="#re" name="reply" title="回復'.$_html['tg_username_floor'].'的'.$_rows['tg_title'].'">[回復]</a>';
+        }
+        
         global $_id;
         $_id = 'id='.$_GET['id'].'&';
         
@@ -188,7 +192,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span><?php echo $_html['subject_modify']?>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
+                <span><?php echo $_html['reply']; ?><?php echo $_html['subject_modify']?>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
@@ -236,6 +240,10 @@ if(isset($_GET['id'])){
 	           } 
 	       }
 	       
+	       if(isset($_COOKIE['username'])){
+	           $_html2['reply'] = '<a href="#re" name="reply" title="回復'.$_i.'#的'.$_html2['tg_username'].'">[回復]</a>';
+	       }
+	       
 	?>
 	<div class="subject">
     	<dl>
@@ -250,7 +258,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span> <a href="#re" name="reply" title="回復<?php echo $_i;?>#的<?php echo $_html2['tg_username']?>">[回復]</a> <?php echo $_html2['subject_modify'] ?> <?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
+                <span> <?php echo $_html2['reply']?>  <?php echo $_html2['subject_modify'] ?> <?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
