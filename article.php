@@ -250,7 +250,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span><?php echo $_html2['subject_modify'] ?> <?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
+                <span> <a href="#re" name="reply" title="回復<?php echo $_i;?>#的<?php echo $_html2['tg_username']?>">[回復]</a> <?php echo $_html2['subject_modify'] ?> <?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
@@ -267,6 +267,7 @@ if(isset($_GET['id'])){
 	?>
 	<?php if($_COOKIE['username']){?>
 	<form method="post" name="post" action="?action=rearticle">
+	   <a name="re"></a>
 		<dl class="reply">
 			<dd>标　　题：<input type="text" name="title" class="text" value="RE:<?php echo $_rows['tg_title']?>" /> (*必填，至少两位)</dd>
 			<dd id="q">贴　　图：<a href="javascript:;">Q图系列[1]</a> <a href="javascript:;">Q图系列[2]</a> <a href="javascript:;">Q图系列[3]</a></dd>
