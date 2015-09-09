@@ -76,7 +76,8 @@ if(isset($_GET['id'])){
                                 tg_content,
                                 tg_readcount,
                                 tg_commendcount,
-                                tg_date
+                                tg_date,
+                                tg_modify_date
                             FROM 
                                 tg_article 
                             WHERE 
@@ -94,30 +95,40 @@ if(isset($_GET['id'])){
         $_rows = _html($_rows);
         $_rows['tg_content'] = _ubb($_rows['tg_content']);
         
+        $_result = _query("SELECT
+                                tg_id,
+                                tg_username,
+                                tg_sex,
+                                tg_face,
+                                tg_email,
+                                tg_url
+                            FROM
+                                tg_user
+                            WHERE
+                                tg_username='{$_rows['tg_username']}'
+                            LIMIT
+                                1
+                        ");
+        $_html = _html(_fetch_array_list($_result));
+        $_html['tg_username_floor'] =$_html['tg_username']. '(楼主)';
+        
         global $_id;
         $_id = 'id='.$_GET['id'].'&';
         
-        $_result = _query("SELECT
-            tg_id,
-            tg_username,
-            tg_sex,
-            tg_face,
-            tg_email,
-            tg_url
-            FROM
-            tg_user
-            WHERE
-            tg_username='{$_rows['tg_username']}'
-            LIMIT
-            1
-            ");
-        $_html = _html(_fetch_array_list($_result));
-        $_html['tg_username_floor'] =$_html['tg_username']. '(楼主)';
+        if($_rows['tg_modify_date'] != '0000-00-00 00:00:00'){
+            $_rows['tg_modify_date_str'] = '本帖已由【'.$_rows['tg_username'].'】在'.$_rows['tg_modify_date'].'時間最後一次修改';
+        }
+        
+        //帖子修改
+        if($_html['tg_username'] == $_COOKIE['username']){
+            $_html['subject_modify'] = '[<a href="article_modify.php?id='.$_GET['id'].'">修改</a>]';
+        }
         
         global $_pagesize,$_pagenum,$_page;
         _page("SELECT tg_id FROM tg_article WHERE tg_reid=".$_GET['id'], 10);
         
         $_re = _query("SELECT
+                            tg_id,
                             tg_username,
                             tg_type,
                             tg_title,
@@ -177,14 +188,14 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
+                <span><?php echo $_html['subject_modify']?>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
                 <?php echo $_rows['tg_content'];?>
             </div>
             <div class="read">
-                                            浏览量（<?php echo $_rows['tg_readcount']?>） 评论数（<?php echo $_rows['tg_commendcount']?>）
+                                            浏览量（<?php echo $_rows['tg_readcount']?>） 评论数（<?php echo $_rows['tg_commendcount']?>）<?php echo $_rows['tg_modify_date_str']?>
             </div>
         </div>
 	</div>
@@ -212,6 +223,11 @@ if(isset($_GET['id'])){
 	           1
 	           ");
 	       $_html2 = _html(_fetch_array_list($_result2));
+	       
+	       //帖子修改
+	       if($_html2['tg_username'] == $_COOKIE['username']){
+	           $_html2['subject_modify'] = '[<a href="article_modify.php?id='.$_rows2['tg_id'].'">修改回復</a>]';
+	       }
 	       if($_i == 2){
 	           if($_html2['tg_username'] != $_html['tg_username']){
 	               $_html2['tg_username'] .= '(沙发)';
@@ -234,7 +250,7 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span><?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
+                <span><?php echo $_html2['subject_modify'] ?> <?php echo $_i;?>#</span><?php echo $_html2['tg_username']?> | <?php echo $_rows2['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">

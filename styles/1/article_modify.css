@@ -1,0 +1,125 @@
+@CHARSET "UTF-8";
+#post {
+	width:auto;
+	height:600px;
+	border:2px solid #ccc;
+	font-size:12px;
+}
+#post h2 {
+	text-indent:0;
+	text-align:center;
+}
+#post dl {
+	width:450px;
+	margin:0 auto;
+}
+#post dl dt {
+	text-align:center;
+	padding:10px 0;
+	font-weight:bold;
+}
+#post dl dd {
+	padding:5px 0;
+	position:relative;
+}
+#ubb{
+	width:410px;
+	height:26px;
+	border:1px dashed #333;
+	border-bottom:1px solid #999;
+	background:url(../../images/bgMenubar.gif) repeat-x;
+}
+#ubb img{
+	display:block;
+	float:left;
+	padding:5px 0 0 6px;
+}
+
+#font{
+	width:130px;
+	height:40px;
+	background:#eee;
+	border:1px dashed #333;
+	padding:8px;
+	line-height:20px;
+	position:absolute;
+	left:0;
+	top:33px;
+	display:none;
+}
+#font strong{
+	font-weight:normal;
+	background:#fff;
+	border:1px solid #ccc;
+	cursor:default;
+}
+#color{
+	width:152px;
+	height:130px;
+	font-size:12px;
+	background:#eee;
+	border:1px dashed #333;
+	padding:4px 0 0 4px;
+	position:absolute;
+	top:33px;
+	left:129px;
+	display:none;
+}
+#color strong{
+	display:block;
+	border:1px solid #999;
+	width:12px;
+	height:12px;
+	float:left;
+	margin:4px 0 0 4px;
+}
+#color em{
+	display:block;
+	width:80%;
+	height:28px;
+	clear:both;
+}
+#color em input{
+	margin-top:10px;
+	margin:left:4px;
+	width:136px;
+	height:20px;
+	cursor:pointer;
+	background:#fff;
+}
+#post dl dd textarea{
+	width:400px;
+	border:1px dashed #333;
+	border-top:none;
+	padding:5px;
+}
+#post dl dd input.text {
+	width:250px;
+	height:19px;
+	border:1px dashed #333;
+	background:#fff;
+}
+#post dl dd input.yzm {
+	width:60px;
+	vertical-align:middle;
+}
+#post dl dd input.submit {
+	width:75px;
+	height:21px;
+	border:1px dashed #333;
+	background:#fff;
+	cursor:pointer;
+	margin:0 0 0 20px;
+}
+#post dl dd input.submit:hover{
+	background:#eee;
+}
+#post dl dd img#code{
+	vertical-align:middle;
+	cursor:pointer;
+}
+
+#q a{
+	text-decoration:none;
+	color:#333;
+}
