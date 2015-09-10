@@ -231,6 +231,13 @@ function _check_post_content($_string,$_num){
     return $_string;
 }
 
+function _check_autograph($_string,$_num){
+    if(mb_strlen($_string,'utf-8') > $_num){
+        _alert_back("帖子标题内容不得大于".$_num."位！");
+    }
+    return $_string;
+}
+
 
 
 ?>

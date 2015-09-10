@@ -67,6 +67,13 @@
 	border:1px dashed #333;
 	background:#fff;
 }
+#member_main dl dd p textarea{
+	width:220px;
+	height:60px;
+	border:1px dashed #333;
+	background:#fff;
+	margin:5px 0 0 70px;
+}
 #member_main dl dd input.yzm {
 	width:60px;
 	vertical-align:middle;

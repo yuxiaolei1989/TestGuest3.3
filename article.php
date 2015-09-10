@@ -100,6 +100,8 @@ if(isset($_GET['id'])){
                                 tg_username,
                                 tg_sex,
                                 tg_face,
+                                tg_switch,
+                                tg_autograph,
                                 tg_email,
                                 tg_url
                             FROM
@@ -126,6 +128,10 @@ if(isset($_GET['id'])){
         //帖子修改
         if($_html['tg_username'] == $_COOKIE['username']){
             $_html['subject_modify'] = '[<a href="article_modify.php?id='.$_GET['id'].'">修改</a>]';
+        }
+        
+        if($_html['tg_switch'] == 1){
+            $_html['autograph_str'] = '<p class="autograph">'._ubb($_html['tg_autograph']).'</p>';
         }
         
         global $_pagesize,$_pagenum,$_page;
@@ -199,6 +205,7 @@ if(isset($_GET['id'])){
                 <?php echo $_rows['tg_content'];?>
             </div>
             <div class="read">
+                <?php echo $_html['autograph_str'];?>
                                             浏览量（<?php echo $_rows['tg_readcount']?>） 评论数（<?php echo $_rows['tg_commendcount']?>）<?php echo $_rows['tg_modify_date_str']?>
             </div>
         </div>
@@ -217,6 +224,8 @@ if(isset($_GET['id'])){
 	           tg_username,
 	           tg_sex,
 	           tg_face,
+	           tg_switch,
+               tg_autograph,
 	           tg_email,
 	           tg_url
 	           FROM
@@ -238,6 +247,10 @@ if(isset($_GET['id'])){
 	           }else{
 	               $_html2['tg_username'] .= '(楼主)';
 	           } 
+	       }
+	       
+	       if($_html2['tg_switch'] == 1){
+	           $_html2['autograph_str'] = '<p class="autograph">'._ubb($_html2['tg_autograph']).'</p>';
 	       }
 	       
 	       if(isset($_COOKIE['username'])){
@@ -263,6 +276,7 @@ if(isset($_GET['id'])){
             <h3>主题：<?php echo $_rows2['tg_title']?> <img src="images/icon<?php echo $_rows2['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">
                 <?php echo $_rows2['tg_content'];?>
+                <?php echo $_html2['autograph_str'];?>
             </div>
         </div>
 	</div>

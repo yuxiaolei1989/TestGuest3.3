@@ -221,6 +221,13 @@
 	color:#333;
 }
 
+p.autograph{
+	color:#666;
+	border-bottom:1px dashed #666;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:80%;
+}
 
 
 
