@@ -68,11 +68,11 @@ if($_GET['action'] == 'add'){
     
         if(_affected_rows() == 1){
             _close();
-            _session_destroy();
+            //_session_destroy();
             _alert_close("添加好友信息已發送！");
         }else{
             _close();
-            _session_destroy();
+            //_session_destroy();
             _alert_back("发送信息失败！");
         }
     }else{

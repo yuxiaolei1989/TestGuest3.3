@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+#member_main dl{
+	width:500px;
+	margin:15px auto;
+	font-size:14px;
+}
+#member_main dl dd{
+	margin:10px auto;
+	border-bottom:1px dashed #999;
+	line-height:35px;
+}
+a.manage{
+	color:#f00;
+}

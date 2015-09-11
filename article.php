@@ -70,11 +70,11 @@ if($_GET['action'] == 'rearticle'){
                 WHERE
                     tg_id = '{$_clean['reid']}'");
         _close();
-        _session_destroy();
+        //_session_destroy();
         _location("恭喜你回复发布成功！", "article.php?id=".$_clean['reid']);
     }else{
         _close();
-        _session_destroy();
+        //_session_destroy();
         _alert_back("很遗憾，帖子回复发布失败了~_~");
     }
 }

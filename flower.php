@@ -52,11 +52,11 @@ if($_GET['action'] == 'send'){
     
         if(_affected_rows() == 1){
             _close();
-            _session_destroy();
+            //_session_destroy();
             _alert_close("送花成功！");
         }else{
             _close();
-            _session_destroy();
+            //_session_destroy();
             _alert_back("送花失败！");
         }
     }else{

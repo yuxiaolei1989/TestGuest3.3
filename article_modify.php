@@ -85,11 +85,11 @@ if($_GET['action'] == 'modify'){
     
     if(_affected_rows() == 1){
         _close();
-        _session_destroy();
+        //_session_destroy();
         _location('恭喜你'.$_clean['text'].'修改成功！', "article.php?id=".$_clean['id']);
     }else{
         _close();
-        _session_destroy();
+        //_session_destroy();
         _alert_back('很遗憾，'.$_clean['text'].'修改失败了~_~');
     }
     

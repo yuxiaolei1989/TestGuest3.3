@@ -70,13 +70,13 @@ if($_GET['action'] == 'register'){
     if(_affected_rows() == 1){
         $_clean['id'] = _insert_id();
         _close();
-        _session_destroy();
+        //_session_destroy();
         
         _set_xml("new.xml",$_clean);
         _location("恭喜你注册成功！", "active.php?active=".$_clean['active']);
     }else{
         _close();
-        _session_destroy();
+        //_session_destroy();
         _location("很遗憾，注册失败了~_~", "register.php");
     }
     

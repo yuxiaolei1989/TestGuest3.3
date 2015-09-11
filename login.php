@@ -25,14 +25,16 @@ if($_GET['action'] == 'login'){
     $_clean['password'] = _check_password($_POST['password'],6);
     $_clean['time'] = _check_time($_POST['time']);
     
-    if(!!$_rows = _fetch_array("SELECT tg_username,tg_uniqid FROM tg_user WHERE tg_username='{$_clean['username']}' AND tg_password='{$_clean['password']}' AND tg_active='' LIMIT 1")){
+    if(!!$_rows = _fetch_array("SELECT tg_username,tg_level,tg_uniqid FROM tg_user WHERE tg_username='{$_clean['username']}' AND tg_password='{$_clean['password']}' AND tg_active='' LIMIT 1")){
         _query("UPDATE tg_user SET 
                         tg_last_time=NOW(),
                         tg_last_ip='{$_SERVER["REMOTE_ADDR"]}',
                         tg_login_count=tg_login_count+1
                         WHERE tg_username='{$_rows['tg_username']}'");
+        if($_rows['tg_level'] == 1){
+            $_SESSION['admin'] = $_rows['tg_username'];
+        }
         _close();
-        _session_destroy();
         _setcookies($_rows['tg_username'],$_rows['tg_uniqid'],$_clean['time']);
         _location(null,"member.php");
     }else{

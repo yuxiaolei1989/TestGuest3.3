@@ -62,11 +62,11 @@ if($_GET['action'] == 'modify'){
         
         if(_affected_rows() == 1){
             _close();
-            _session_destroy();
+            //_session_destroy();
             _location("恭喜你修改成功！", "member.php");
         }else{
             _close();
-            _session_destroy();
+            //_session_destroy();
             _location("很遗憾，没有任何数据被修改", "member_modify.php");
         }
     }
