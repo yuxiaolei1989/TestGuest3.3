@@ -9,6 +9,14 @@
 * Date: 2010-8-11
 */
 
+
+function _timed($_now_time,$_pre_time,$_second){
+    if(($_now_time - $_pre_time) < $_second){
+        _alert_back("请阁下休息一会再发帖");
+    }
+}
+
+
 /**
  *_runtime()是用来获取执行耗时
  * @access public  表示函数对外公开
@@ -27,10 +35,12 @@ function _runtime() {
 
 function _alert_back($_info){
     echo "<script>alert('$_info');history.back();</script>";
+    exit;
 }
 
 function _alert_close($_info){
     echo "<script>alert('$_info');window.close();</script>";
+    exit;
 }
 
 

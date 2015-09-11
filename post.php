@@ -20,13 +20,17 @@ if($_GET['action'] == 'post'){
     _check_code($_POST['code'],$_SESSION['code']);
     
     $_rows = _fetch_array("SELECT 
-                            tg_uniqid
+                            tg_uniqid,
+                            tg_post_time
                      FROM
                             tg_user
                      WHERE
                             tg_username='{$_COOKIE['username']}'");
 
     _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+    
+    //显示发帖
+    _timed(time(), $_rows['tg_post_time'], 60);
     
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
@@ -53,6 +57,16 @@ if($_GET['action'] == 'post'){
     
     if(_affected_rows() == 1){
         $_clean['id'] = _insert_id();
+        //setCookie("post_time",time());
+        $_post_time = time();
+        _query("UPDATE
+                    tg_user
+                SET
+                    tg_post_time='{$_post_time}'
+                WHERE
+                    tg_username='{$_COOKIE['username']}'
+                ");
+        
         _close();
         _session_destroy();
         _location("恭喜你帖子发布成功！", "article.php?id=".$_clean['id']);

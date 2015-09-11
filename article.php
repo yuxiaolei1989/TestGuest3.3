@@ -16,13 +16,16 @@ if($_GET['action'] == 'rearticle'){
     _check_code($_POST['code'],$_SESSION['code']);
     
     $_rows = _fetch_array("SELECT
-        tg_uniqid
+        tg_uniqid,
+        tg_article_time
         FROM
         tg_user
         WHERE
         tg_username='{$_COOKIE['username']}'");
     
     _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+    
+    _timed(time(), $_rows['tg_article_time'], 60);
     
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
@@ -51,6 +54,15 @@ if($_GET['action'] == 'rearticle'){
     )");
     
     if(_affected_rows() == 1){
+        setcookie('article_time',time());
+        $_article_time = time();
+        _query("UPDATE
+                    tg_user
+                SET
+                    tg_article_time='{$_article_time}'
+                WHERE
+                    tg_username='{$_COOKIE['username']}'
+            ");
         _query("UPDATE
                     tg_article
                 SET
