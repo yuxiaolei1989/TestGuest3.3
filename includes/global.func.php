@@ -9,7 +9,18 @@
 * Date: 2010-8-11
 */
 
+function _manage_login(){
+    if((!isset($_COOKIE['username'])) || (!isset($_SESSION['admin']))){
+        _location("你不是管理员！", "login.php");
+    }
+}
 
+/**
+ * 限时发帖
+ * @param unknown $_now_time
+ * @param unknown $_pre_time
+ * @param unknown $_second
+ */
 function _timed($_now_time,$_pre_time,$_second){
     if(($_now_time - $_pre_time) < $_second){
         _alert_back("请阁下休息一会再发帖");

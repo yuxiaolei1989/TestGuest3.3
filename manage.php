@@ -12,14 +12,7 @@ define('SCRIPT','manage');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
-if(!isset($_COOKIE['username'])){
-    _location("请登录账号！", "login.php");
-}
-
-if(!isset($_SESSION['admin'])){
-    _location("你不是管理员！", "login.php");
-}
-
+_manage_login();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
