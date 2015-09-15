@@ -11,9 +11,11 @@ define('IN_TG',true);
 define('SCRIPT','article');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
-
+global $_system;
 if($_GET['action'] == 'rearticle'){
-    _check_code($_POST['code'],$_SESSION['code']);
+    if($_system['tg_code'] == 1){
+        _check_code($_POST['code'],$_SESSION['code']);
+    }
     
     $_rows = _fetch_array("SELECT
         tg_uniqid,
@@ -25,7 +27,7 @@ if($_GET['action'] == 'rearticle'){
     
     _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
     
-    _timed(time(), $_rows['tg_article_time'], 60);
+    _timed(time(), $_rows['tg_article_time'], $_system['tg_re']);
     
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
@@ -308,7 +310,13 @@ if(isset($_GET['id'])){
 			     <?php include ROOT_PATH.'includes/ubb.inc.php';?>
 			     <textarea name="content" rows="9"></textarea>
 			</dd>
-			<dd>验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" alt="验证码" id="code" /> <input type="submit" class="submit" id="submit" value="发表帖子" /></dd>
+			
+			<dd>
+			<?php if($_system['tg_code'] == 1){ ?>
+			         验 证 码：<input type="text" name="code" class="text yzm"  /> <img src="code.php" alt="验证码" id="code" /> 
+		    <?php }?>
+		    <input type="submit" class="submit" id="submit" value="发表帖子" />
+		    </dd>
 		</dl>
 		<input type="hidden" name="reid" value="<?php echo $_rows['tg_id'];?>" />
 		<input type="hidden" name="type" value="<?php echo $_rows['tg_type'];?>" />

@@ -12,8 +12,8 @@ define('SCRIPT','blog');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
-global $_pagesize,$_pagenum;
-_page("SELECT tg_id FROM tg_user", 15);
+global $_pagesize,$_pagenum,$_system;
+_page("SELECT tg_id FROM tg_user", $_system['tg_blog']);
 
 $_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face FROM tg_user ORDER BY tg_reg_time DESC LIMIT $_pagenum,$_pagesize");
 
@@ -51,7 +51,7 @@ $_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face FROM tg_user ORDER BY
 	
 	<?php 
 	   _free_result($_result);
-	   _paging(1)
+	   _paging(2);
 	?>
 </div>
 <?php 

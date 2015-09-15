@@ -11,7 +11,10 @@ define('IN_TG',true);
 define('SCRIPT','register');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
-
+global $_system;
+if($_system['tg_register'] != 1){
+    _alert_back("注册功能已关闭，如想注册请联系管理员！");
+}
 _login_state();
 
 if($_GET['action'] == 'register'){

@@ -46,9 +46,8 @@ function _check_username($_string,$_min_num=2,$_max_num=20){
         _alert_back("用户名不得包含敏感字符");
     }
     
-    
-    $_mg[0] = '胡锦涛';
-    $_mg[1] = '习近平';
+    global $_system;
+    $_mg = explode("|",$_system['tg_string']); 
     
     foreach ($_mg as $value){
         $_mg_string .=$value ."、";

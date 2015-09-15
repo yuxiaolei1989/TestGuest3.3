@@ -231,15 +231,15 @@ function _paging($_type){
         	                     <li>上一页 |</li>";
         	           }else{
         	               echo "<li><a href='".SCRIPT.".php'>首页</a> |</li>
-        	                     <li><a href='".SCRIPT.".php?'.$_id.'page=".($_page -1)."'>上一页</a> |</li>";
+        	                     <li><a href='".SCRIPT.".php?".$_id."page=".($_page -1)."'>上一页</a> |</li>";
         	           }
         	           
         	           if($_page == $_pageabsolute){
         	               echo "<li>下一页 |</li>
         	                     <li>尾页 |</li>";
         	           }else{
-        	               echo "<li><a href='".SCRIPT.".php?'.$_id.'page=".($_page+1)."'>下一页</a> |</li>
-        	                     <li><a href='".SCRIPT.".php?'.$_id.'page=".$_pageabsolute."'>尾页</a> |</li>";
+        	               echo "<li><a href='".SCRIPT.".php?".$_id."page=".($_page+1)."'>下一页</a> |</li>
+        	                     <li><a href='".SCRIPT.".php?".$_id."page=".$_pageabsolute."'>尾页</a> |</li>";
         	           }
         	      
         	       

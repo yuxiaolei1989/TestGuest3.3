@@ -16,6 +16,7 @@ if(!isset($_COOKIE['username'])){
     _location("请先登录", "login.php");
 }
 
+global $_system;
 if($_GET['action'] == 'post'){
     _check_code($_POST['code'],$_SESSION['code']);
     
@@ -30,7 +31,7 @@ if($_GET['action'] == 'post'){
     _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
     
     //显示发帖
-    _timed(time(), $_rows['tg_post_time'], 60);
+    _timed(time(), $_rows['tg_post_time'], $_system['tg_post']);
     
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();

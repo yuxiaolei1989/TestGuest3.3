@@ -14,9 +14,12 @@ require dirname(__FILE__).'/includes/common.inc.php';
 
 _login_state();
 
+global $_system;
+
 if($_GET['action'] == 'login'){
-    _check_code($_POST['code'],$_SESSION['code']);
-    
+    if($_system['tg_code'] == 1){
+        _check_code($_POST['code'],$_SESSION['code']);
+    }
     include ROOT_PATH.'includes/login.func.php';
     
     $_clean = array();
@@ -68,7 +71,9 @@ if($_GET['action'] == 'login'){
 			<dd>用户名：<input type="text" name="username" class="text" /> (*必填，至少两位)</dd>
 			<dd>密　码：<input type="password" name="password" class="text" /> (*必填，至少六位)</dd>
 			<dd>保　留：<input type="radio" name="time" checked="checked" value="0" /> 不保留  <input type="radio" name="time" value="1" />一天 <input type="radio" name="time" value="2" />一周  <input type="radio" name="time" value="3" />一个月</dd>
+			<?php if($_system['tg_code'] == 1){ ?>
 			<dd>验 证 码：<input type="text" name="code" class="text code"  /> <img src="code.php" alt="验证码" id="code" /></dd>
+			<?php }?>
 			<dd><input type="submit" class="button" id="submit" value="登录" /><input type="button" class="button" id="regiter" value="注册" /></dd>
 	   </dl>
 	</form>
