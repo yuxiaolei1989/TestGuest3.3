@@ -56,7 +56,19 @@ if(empty($_message['count'])){
     $_message_html = '<strong class="read"><a href="member_message.php">('.$_message['count'].')</a></strong>';
 }
 
-
+//網站系統設置初始化
+if(!!$_system =_fetch_array("SELECT
+                                *
+                            FROM
+                                tg_system
+                            WHERE
+                                tg_id=1
+                          ")){
+    $_system = _html($_system);
+     
+}else{
+    exit("系統表異常，請管理員檢查！");
+}
 
 
 

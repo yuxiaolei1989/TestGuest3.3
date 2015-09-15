@@ -22,7 +22,6 @@ $_result = _query("SELECT tg_id,tg_username,tg_sex,tg_face FROM tg_user ORDER BY
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>多用户留言系统--博友</title>
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>

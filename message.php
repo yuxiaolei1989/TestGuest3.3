@@ -71,7 +71,6 @@ if(isset($_GET['id'])){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>多用户留言系统--发消息</title>
 <?php 
 	require ROOT_PATH.'includes/title.inc.php';
 ?>
