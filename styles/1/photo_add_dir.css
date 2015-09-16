@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+#photo_add_dir {
+	width:auto;
+	height:800px;
+	border:2px solid #ccc;
+	font-size:12px;
+}
+#photo_add_dir h2 {
+	text-indent:0;
+	text-align:center;
+}
+#photo_add_dir dl{
+	width:280px;
+	margin:20px auto;
+}
+#photo_add_dir dl dd {
+	padding:5px 0;
+}
+#photo_add_dir dl dd input.text {
+	border:1px dashed #333;
+	background:#fff;
+	width:180px;
+	height:19px;
+}
+#photo_add_dir dl dd textarea {
+	border:1px dashed #333;
+	background:#fff;
+	width:180px;
+	height:70px;
+}
+#photo_add_dir dl dd#pass {
+	display:none;
+}
+#photo_add_dir dl dd input.submit {
+	border:1px dashed #333;
+	background:#fff;
+	width:60px;
+	height:19px;
+	cursor:pointer;
+	padding:0 0 2px 0;
+	margin:0 0 0 100px;
+}
