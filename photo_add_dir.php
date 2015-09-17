@@ -16,10 +16,16 @@ _manage_login();
 
 
 if($_GET['action'] == 'adddir'){
+    include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
-    $_clean['name'] = $_POST['name'];
+    $_clean['name'] = _check_dir_name($_POST['name'],2,20);
     $_clean['type'] = $_POST['type'];
-    $_clean['password'] = $_POST['password'];
+    if($_clean['type'] == 1){
+        $_clean['password'] = _check_dir_password($_POST['password'],2);
+    }else{
+        $_clean['password'] = "";
+    }
+    
     $_clean['content'] = $_POST['content'];
     $_clean['dir'] = 'photo/'.time();
     $_clean = _mysql_string($_clean);

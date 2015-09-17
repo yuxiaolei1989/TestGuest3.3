@@ -12,6 +12,18 @@ define('SCRIPT','photo');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
+global $_pagesize,$_pagenum,$_system;
+_page("SELECT tg_id FROM tg_dir", $_system['tg_photo']);
+
+$_result = _query("SELECT 
+                        * 
+                    FROM 
+                        tg_dir 
+                    ORDER BY 
+                        tg_date DESC 
+                    LIMIT 
+                        $_pagenum,$_pagesize");
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -30,6 +42,25 @@ require dirname(__FILE__).'/includes/common.inc.php';
 
 <div id="photo">
 	<h2>相册列表</h2>
+	<?php 
+	   while(!!$_rows = _fetch_array_list($_result)){
+	       
+	       if($_rows['tg_type'] == 1){
+	           $_rows['type_html'] = '(公开)';
+	       }else{
+	           $_rows['type_html'] = '(私密)';
+	       }
+	       
+	       $_rows = _html($_rows);
+	?>
+	<dl>
+	   <dt></dt>
+	   <dd><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['tg_name']?></a></dd>
+	   <?php if(isset($_SESSION['admin'])){?>
+	   <dd>[修改] [删除]</dd>
+	   <?php }?>
+	</dl>
+	<?php }?>
 	<?php if(isset($_SESSION['admin'])){?>
 	<p><a href="photo_add_dir">添加相册目录</a></p>
 	<?php }?>

@@ -237,6 +237,36 @@ function _check_autograph($_string,$_num){
     return $_string;
 }
 
+/**
+ * _check_dir_name 检测相册名并过滤
+ * @access public
+ * @param string $_string
+ * @param number $_min_num 最小位数
+ * @param number $_max_num 最大位数
+ * @return string
+ */
 
+function _check_dir_name($_string,$_min_num=2,$_max_num=20){
+    $_string =trim($_string);
+
+    $_len  = mb_strlen($_string,'utf-8');
+    if($_len < $_min_num || $_len > $_max_num ){
+        _alert_back("相册名长度小于".$_min_num."或者不能大于".$_max_num."位！");
+    }
+}
+
+/**
+ * _check_dir_password 检测相册密码
+ * @param unknown $_first_pass
+ * @param unknown $_min_num
+ * @return string
+ */
+function _check_dir_password($_first_pass,$_min_num){
+    if(strlen($_first_pass) < $_min_num){
+        _alert_back("密码不得小于".$_min_num."位！");
+    }
+
+    return _mysql_string(sha1($_first_pass));
+}
 
 ?>

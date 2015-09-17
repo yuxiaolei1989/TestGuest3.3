@@ -10,6 +10,33 @@
 	text-align:center;
 }
 #photo p{
+	clear:both;
 	text-align:center;
 	padding:10px;
+}
+#photo dl{
+	width:150px;
+	height:180px;
+	margin:20px;
+	float:left;
+}
+#photo dl dt{
+	width:94px;
+	height:93px;
+	margin:0 auto;
+	text-align:center;
+	background:url(../../images/photo.jpg) no-repeat;
+}
+#photo dl dd{
+	width:90px;
+	text-align:center;
+	margin:0 auto;
+	padding:5px 0;
+}
+#photo dl dd a{
+	color:#333;
+	text-decoration:none;
+}
+#photo dl dd a:hover{
+	color:#f60;
 }
