@@ -14,6 +14,51 @@ require dirname(__FILE__).'/includes/common.inc.php';
 
 _manage_login();
 
+
+if($_GET['action'] == 'adddir'){
+    $_clean = array();
+    $_clean['name'] = $_POST['name'];
+    $_clean['type'] = $_POST['type'];
+    $_clean['password'] = $_POST['password'];
+    $_clean['content'] = $_POST['content'];
+    $_clean['dir'] = 'photo/'.time();
+    $_clean = _mysql_string($_clean);
+    
+    if(!is_dir('photo')){
+        mkdir("photo",0777);
+    }
+    
+    if(!is_dir($_clean['dir'])){
+        mkdir($_clean['dir']);
+    }
+    
+    _query("INSERT INTO tg_dir (
+                                tg_name,
+                                tg_type,
+                                tg_password,
+                                tg_content,
+                                tg_dir,
+                                tg_date
+                             )
+                        VALUES (
+                                '{$_clean['name']}',
+                                '{$_clean['type']}',
+                                '{$_clean['password']}',
+                                '{$_clean['content']}',
+                                '{$_clean['dir']}',
+                                NOW()
+                              )
+                    ");
+    if(_affected_rows() == 1){
+        _close();
+        _location("恭喜你相册创建成功！", "photo.php");
+    }else{
+        _close();
+        _location("很遗憾，相册创建失败！", "photo_add_dir.php");
+    }
+    
+    
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
