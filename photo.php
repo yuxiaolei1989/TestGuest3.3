@@ -52,12 +52,18 @@ $_result = _query("SELECT
 	       }
 	       
 	       $_rows = _html($_rows);
+	       
+	       if(empty($_rows['tg_face'])){
+	           $_rows['face_html'] = "";
+	       }else{
+	           $_rows['face_html'] = '<img src="'.$_rows['tg_face'].'" alt="'.$_rows['tg_name'].'" />';
+	       }
 	?>
 	<dl>
-	   <dt></dt>
+	   <dt><?php echo $_rows['face_html']?></dt>
 	   <dd><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['tg_name']?></a></dd>
 	   <?php if(isset($_SESSION['admin'])){?>
-	   <dd>[修改] [删除]</dd>
+	   <dd>[<a href="photo_modify_dir.php?id=<?php echo $_rows['tg_id']?>">修改</a>] [<a>删除</a>]</dd>
 	   <?php }?>
 	</dl>
 	<?php }?>
