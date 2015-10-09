@@ -5,7 +5,7 @@
 window.onload = function(){
 	var up = document.getElementById("up");
 	up.onclick = function(){
-		centerWindow("upimg.php",'up',150,400);
+		centerWindow("upimg.php?dir="+this.title,'up',150,400);
 	}
 }
 

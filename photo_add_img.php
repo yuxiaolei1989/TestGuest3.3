@@ -16,6 +16,24 @@ if(!$_COOKIE['username']){
     _alert_back("非法登录");
 }
 
+if(isset($_GET['id'])){
+    if(!!$_rows = _fetch_array("SELECT
+        tg_id,
+        tg_dir
+        FROM
+        tg_dir
+        WHERE
+        tg_id='{$_GET['id']}'
+        ")){
+         
+
+    }else{
+        _alert_back("不存在此相册");
+    }
+}else{
+    _alert_back("非法操作！");
+}
+
 if($_GET['action'] == 'adddir'){
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
@@ -86,7 +104,7 @@ if($_GET['action'] == 'adddir'){
 	<form action="?action=addimg" method="post">
 	<dl>
 	   <dd>图片名称：<input type="text" name="name" class="text" /></dd>
-	   <dd>图片地址：<input type="text" name="url" readonly="readonly" class="text" /> <a href="javascript:;" id="up">上传</a></dd>
+	   <dd>图片地址：<input type="text" name="url" id="url" readonly="readonly" class="text" /> <a href="javascript:;" id="up" title="<?php echo $_rows['tg_dir']?>">上传</a></dd>
 	   <dd>图片描述：<textarea name="content"></textarea></dd>
 	   <dd><input type="submit" value="添加图片" class="submit" /></dd>
 	</dl>

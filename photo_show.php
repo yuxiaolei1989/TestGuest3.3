@@ -12,6 +12,23 @@ define('SCRIPT','photo_show');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
+if(isset($_GET['id'])){
+    if(!!$_rows = _fetch_array("SELECT
+                                    tg_id
+                                FROM
+                                    tg_dir
+                                WHERE
+                                    tg_id='{$_GET['id']}'
+                             ")){
+           
+        
+    }else{
+        _alert_back("不存在此相册");
+    }
+}else{
+    _alert_back("非法操作！");
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,7 +47,7 @@ require dirname(__FILE__).'/includes/common.inc.php';
 <div id="photo">
 	<h2>图片展示</h2>
 
-	<p><a href="photo_add_img.php">上传图片</a></p>
+	<p><a href="photo_add_img.php?id=<?php echo $_GET['id']?>">上传图片</a></p>
 
 </div>
 <?php 
