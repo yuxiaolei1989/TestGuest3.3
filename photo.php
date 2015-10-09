@@ -60,7 +60,7 @@ $_result = _query("SELECT
 	       }
 	?>
 	<dl>
-	   <dt><?php echo $_rows['face_html']?></dt>
+	   <dt><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['face_html']?></a></dt>
 	   <dd><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['tg_name']?></a></dd>
 	   <?php if(isset($_SESSION['admin'])){?>
 	   <dd>[<a href="photo_modify_dir.php?id=<?php echo $_rows['tg_id']?>">修改</a>] [<a>删除</a>]</dd>
