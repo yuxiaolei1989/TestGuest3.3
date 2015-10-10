@@ -16,6 +16,53 @@ if(!$_COOKIE['username']){
     _alert_back("非法登录");
 }
 
+
+
+if($_GET['action'] == 'addimg'){
+    if (!!$_rows = _fetch_array("SELECT
+        tg_uniqid
+        FROM
+        tg_user
+        WHERE
+        tg_username='{$_COOKIE['username']}'
+        LIMIT
+        1"
+    )) {
+        _uniqid($_rows['tg_uniqid'],$_COOKIE['uniqid']);
+        include ROOT_PATH.'includes/check.func.php';
+        $_clean = array();
+        $_clean['name'] = _check_dir_name($_POST['name'],2,20);
+        $_clean['url'] = _check_photo_url($_POST['url']);
+        $_clean['content'] = $_POST['content'];
+        $_clean['sid'] = $_POST['sid'];
+        $_clean = _mysql_string($_clean);
+        _query("INSERT INTO tg_photo (
+            tg_name,
+            tg_url,
+            tg_content,
+            tg_sid,
+            tg_date
+        )
+            VALUES (
+            '{$_clean['name']}',
+            '{$_clean['url']}',
+            '{$_clean['content']}',
+            '{$_clean['sid']}',
+            NOW()
+        )
+        ");
+        if(_affected_rows() == 1){
+            _close();
+            _location("恭喜你图片添加成功！", "photo_show.php?id=".$_clean['sid']);
+        }else{
+            _close();
+            _location("很遗憾，图片添加失败！", "photo_add_dir.php");
+        }
+    }else{
+        _alert_back("非法操作444！");
+    }   
+}
+
 if(isset($_GET['id'])){
     if(!!$_rows = _fetch_array("SELECT
         tg_id,
@@ -32,57 +79,6 @@ if(isset($_GET['id'])){
     }
 }else{
     _alert_back("非法操作！");
-}
-
-if($_GET['action'] == 'adddir'){
-    include ROOT_PATH.'includes/check.func.php';
-    $_clean = array();
-    $_clean['name'] = _check_dir_name($_POST['name'],2,20);
-    $_clean['type'] = $_POST['type'];
-    if($_clean['type'] == 1){
-        $_clean['password'] = _check_dir_password($_POST['password'],2);
-    }else{
-        $_clean['password'] = "";
-    }
-    
-    $_clean['content'] = $_POST['content'];
-    $_clean['dir'] = 'photo/'.time();
-    $_clean = _mysql_string($_clean);
-    
-    if(!is_dir('photo')){
-        mkdir("photo",0777);
-    }
-    
-    if(!is_dir($_clean['dir'])){
-        mkdir($_clean['dir']);
-    }
-    
-    _query("INSERT INTO tg_dir (
-                                tg_name,
-                                tg_type,
-                                tg_password,
-                                tg_content,
-                                tg_dir,
-                                tg_date
-                             )
-                        VALUES (
-                                '{$_clean['name']}',
-                                '{$_clean['type']}',
-                                '{$_clean['password']}',
-                                '{$_clean['content']}',
-                                '{$_clean['dir']}',
-                                NOW()
-                              )
-                    ");
-    if(_affected_rows() == 1){
-        _close();
-        _location("恭喜你相册创建成功！", "photo.php");
-    }else{
-        _close();
-        _location("很遗憾，相册创建失败！", "photo_add_dir.php");
-    }
-    
-    
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -108,6 +104,7 @@ if($_GET['action'] == 'adddir'){
 	   <dd>图片描述：<textarea name="content"></textarea></dd>
 	   <dd><input type="submit" value="添加图片" class="submit" /></dd>
 	</dl>
+	<input type="hidden" name="sid" value="<?php echo $_GET['id']?>"/>
 	</form>
 </div>
 <?php 

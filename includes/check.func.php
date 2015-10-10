@@ -251,7 +251,7 @@ function _check_dir_name($_string,$_min_num=2,$_max_num=20){
 
     $_len  = mb_strlen($_string,'utf-8');
     if($_len < $_min_num || $_len > $_max_num ){
-        _alert_back("相册名长度小于".$_min_num."或者不能大于".$_max_num."位！");
+        _alert_back("名称长度小于".$_min_num."或者不能大于".$_max_num."位！");
     }
     return $_string;
 }
@@ -268,6 +268,15 @@ function _check_dir_password($_first_pass,$_min_num){
     }
 
     return _mysql_string(sha1($_first_pass));
+}
+
+
+function _check_photo_url($_string){
+    if(empty($_string)){
+        _alert_back("地址不能为空");
+    }
+    
+    return $_string;
 }
 
 ?>
