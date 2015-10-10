@@ -89,6 +89,36 @@ function _uniqid($_mysql_uniqid,$_cookie_uniqid){
     }
 }
 
+
+function _thumb($_filename,$_percent){
+    header('Content-type:image/png');
+    
+    $_n = explode('.',$_filename);
+    
+    list($_width,$_height) = getimagesize($_filename);
+    
+    $_new_width = $_width * 0.2;
+    $_new_height = $_height * 0.2;
+    
+    $_new_image = imagecreatetruecolor($_new_width, $_new_height);
+    
+    switch ($_n[1]){
+        case 'jpg' : $_image = imagecreatefromjpeg($_filename);
+        break;
+        case 'png' : $_image = imagecreatefrompng($_filename);
+        break;
+        case 'gif' : $_image = imagecreatefromjpeg($_filename);
+        break;
+    }
+    
+    imagecopyresampled($_new_image,$_image,0,0,0,0,$_new_width,$_new_height,$_width,$_height);
+    
+    imagepng($_new_image);
+    
+    imagedestroy($_new_image);
+    imagedestroy($_image);
+}
+
 function _get_xml($_xmlfile){
     $_xmlfile = "new.xml";
     $_html = array();

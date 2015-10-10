@@ -68,6 +68,7 @@ if($_GET['action'] == 'up'){
                 _alert_back('移动失败');
             } else {
                 echo "<script type='text/javascript'>window.opener.document.getElementById('url').value = '$_name';window.close();</script>";
+                exit();
             }
         } else {
             _alert_back('上传的临时文件不存在！');

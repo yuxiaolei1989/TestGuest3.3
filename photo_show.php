@@ -46,7 +46,7 @@ if(isset($_GET['id'])){
 
 <div id="photo">
 	<h2>图片展示</h2>
-
+    <img src="thumb.php?filename=photo/1442531656/1444483823.jpg&percent=0.3"/>
 	<p><a href="photo_add_img.php?id=<?php echo $_GET['id']?>">上传图片</a></p>
 
 </div>
