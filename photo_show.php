@@ -29,6 +29,11 @@ if(isset($_GET['id'])){
     _alert_back("非法操作！");
 }
 
+global $_pagesize,$_pagenum,$_system,$_id;
+$_id = 'id='.$_GET['id'].'&';
+_page("SELECT tg_id FROM tg_photo WHERE tg_sid='{$_GET['id']}'", $_system['tg_photo']);
+$_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -46,7 +51,23 @@ if(isset($_GET['id'])){
 
 <div id="photo">
 	<h2>图片展示</h2>
-    <img src="thumb.php?filename=photo/1442531656/1444483823.jpg&percent=0.3"/>
+	<?php 
+	   while(!!$_rows = _fetch_array_list($_result)){
+	       $_rows = _html($_rows);
+	?>
+	   <dl>
+    	   <dt><img src="thumb.php?filename=<?php echo $_rows['tg_url']?>&percent=0.3"/></dt>
+    	   <dd class="name"><?php echo $_rows['tg_name']?></dd>
+    	   <dd class="friend"></dd>
+    	</dl>
+	   
+	<?php }?>
+	
+	<?php 
+	   _free_result($_result);
+	   _paging(2);
+	?>
+    
 	<p><a href="photo_add_img.php?id=<?php echo $_GET['id']?>">上传图片</a></p>
 
 </div>

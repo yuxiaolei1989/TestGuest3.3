@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 #photo {
 	width:auto;
-	height:800px;
+	height:auto;
 	border:2px solid #ccc;
 	font-size:12px;
 }
@@ -14,32 +14,22 @@
 	text-align:center;
 	padding:10px;
 }
+
+
 #photo dl{
-	width:150px;
-	height:180px;
-	margin:20px;
 	float:left;
+	margin:40px 40px;
+	text-align:center;
 }
 #photo dl dt{
-	width:94px;
-	height:93px;
-	margin:0 auto;
+	width:210px;
+	height:210px;
+	overflow:hidden;
 	text-align:center;
-	background:url(../../images/photo.jpg) no-repeat;
 }
 #photo dl dt img{
-	margin:10px 0 0 8px;
+	vertical-align:middle;
 }
 #photo dl dd{
-	width:90px;
-	text-align:center;
-	margin:0 auto;
 	padding:5px 0;
-}
-#photo dl dd a{
-	color:#333;
-	text-decoration:none;
-}
-#photo dl dd a:hover{
-	color:#f60;
 }
