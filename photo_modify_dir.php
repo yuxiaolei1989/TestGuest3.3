@@ -8,16 +8,16 @@ session_start();
 //定义个常量，用来授权调用includes里面的文件
 define('IN_TG',true);
 //定义个常量，用来指定本页的内容
-define('SCRIPT','photo_add_dir');
+define('SCRIPT','photo_modify_dir');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
 
 _manage_login();
 
 if($_GET['action'] == 'modify'){
-
+    
     _check_code($_POST['code'],$_SESSION['code']);
-
+    
     $_rows2 = _fetch_array("SELECT
                                 tg_uniqid
                             FROM
@@ -25,7 +25,7 @@ if($_GET['action'] == 'modify'){
                             WHERE
                                 tg_username='{$_COOKIE['username']}'
                             ");
-
+    
 
     _uniqid($_rows2['tg_uniqid'], $_COOKIE['uniqid']);
 

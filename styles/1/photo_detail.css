@@ -32,6 +32,91 @@
 	
 }
 
+
+.subject dl{
+	width:190px;
+	padding-top:10px;
+	padding-left:45px;
+	float:left;
+}
+.subject dl dt{
+	width:190px;
+	margin-bottom:5px;
+}
+.subject dl dt img{
+	margin:0 auto;
+	display:block;
+}
+.subject dl dd{
+	width:95px;
+	float:left;
+	text-align:center;
+	height:20px;
+	line-height:20px;
+}
+.subject dl dd a{
+	color:#333;
+	text-decoration:none;
+}
+.subject dl dd.user{
+	width:190px;
+	float:none;
+	color:#f60;
+}
+.subject dl dd.email,.subject dl dd.url{
+	width:200px;
+	float:none;
+	clear:both;
+	text-align:left;
+	padding-top:2px;
+	text-indent:5px;
+	text-overflow:ellipsis;
+	word-break:break-all
+	height:25px;
+}
+.subject dl dd.message{
+	background:url(../../images/x1.gif) no-repeat 5px 35%;
+}
+.subject dl dd.friend{
+	background:url(../../images/x2.gif) no-repeat left 35%;
+}
+.subject dl dd.guest{
+	background:url(../../images/x3.gif) no-repeat 5px 35%;
+}
+.subject dl dd.flower{
+	background:url(../../images/x4.gif) no-repeat left 35%;
+}
+
+#photo #content{
+	float:right;
+	padding-right:20px;
+	
+	width:680px;
+}
+#photo #content .user{
+	background:url(../../images/member.gif) no-repeat left center;
+	color:#666;
+	padding-left:20px;
+	height:40px;
+	line-height:40px;
+	border-bottom:1px dashed #999;
+}
+#photo #content .user span{
+	float:right;
+	color:#06f;
+}
+#photo #content h3{
+	font-size:14px;
+	line-height:40px;
+}
+#photo #content h3 img{
+	vertical-align:middle;
+}
+#photo #content .detail{
+	line-height:22px;
+	font-size:14px;
+}
+
 .line{
 	width:95%;
 	margin:0 auto;
