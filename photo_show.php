@@ -59,7 +59,7 @@ $_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY 
 	   <dl>
     	   <dt><a href="photo_detail.php?id=<?php echo $_rows['tg_id']?>"><img src="thumb.php?filename=<?php echo $_rows['tg_url']?>&percent=0.3"/></a></dt>
     	   <dd class="name"><?php echo $_rows['tg_name']?></dd>
-    	   <dd class="friend"></dd>
+    	   <dd class="friend">浏览量 （<strong><?php echo $_rows['tg_readcount']?></strong>） 评论量 （<strong><?php echo $_rows['tg_commendcount']?></strong>）<br/>上传者：<?php echo $_rows['tg_username']?></dd>
     	</dl>
 	   
 	<?php }?>

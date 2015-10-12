@@ -19,8 +19,15 @@
 	text-align:center;
 	margin:20px;
 }
-
-#photo dl.detail dd{
+#photo dl.detail dt a{
+	color:#f60;
+	font-size:14px;
+	font-weight:bold;
+	padding:10px;
+	text-decoration:none;
+	vertical-align:top;
+}
+#photo dl.detail dd,#photo dl.detail dt{
 	padding:10px;
 	font-size:14px;
 	color:#333;

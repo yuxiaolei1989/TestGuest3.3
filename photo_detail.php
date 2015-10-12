@@ -106,6 +106,39 @@ if(isset($_GET['id'])){
          $_pagenum,$_pagesize
          ");
       
+     $_rows['preid'] = _fetch_array("SELECT
+                                            min(tg_id) AS id
+                                        FROM
+                                            tg_photo
+                                        WHERE
+                                            tg_sid='{$_rows['tg_sid']}'
+                                        AND
+                                            tg_id > '{$_GET['id']}'
+                                        LIMIT
+                                            1
+                                    ");
+     if(!empty($_rows['preid']['id'])){
+         $_row['preStr'] = '<a href="?id='.$_rows['preid']['id'].'">上一页</a>';
+     }else{
+         $_row['preStr'] = "";
+     }
+     
+     $_rows['nextid'] = _fetch_array("SELECT
+         max(tg_id) AS id
+         FROM
+         tg_photo
+         WHERE
+         tg_sid='{$_rows['tg_sid']}'
+         AND
+         tg_id < '{$_GET['id']}'
+         LIMIT
+         1
+         ");
+     if(!empty($_rows['nextid']['id'])){
+         $_row['nextStr'] = '<a href="?id='.$_rows['nextid']['id'].'">下一页</a>';
+     }else{
+         $_row['nextStr'] = "";
+     }
         
     }else{
         _alert_back("不存在此相册");
@@ -133,7 +166,8 @@ if(isset($_GET['id'])){
 	<h2><?php echo $_rows['tg_name']?></h2>
     <dl class="detail">
 	   <dd><?php echo $_rows['tg_name']?></dd>
-	   <dd><img src="<?php echo $_rows['tg_url']?>" /></dd>
+	   <dt><?php echo $_row['preStr']?><img src="<?php echo $_rows['tg_url']?>" /><?php echo $_row['nextStr']?></dt>
+	   <dd>[<a href="photo_show.php?id=<?php echo $_rows['tg_sid']?>">返回列表</a>]</dd>
 	   <dd>图片简介：<?php echo $_rows['tg_content']?> </dd>
 	   <dd>浏览量 （<strong><?php echo $_rows['tg_readcount']?></strong>） 评论量 （<strong><?php echo $_rows['tg_commendcount']?></strong>）<br/>上传者：<?php echo $_rows['tg_username']?> 发表时间：<?php echo $_rows['tg_date']?></dd>
 	</dl>
