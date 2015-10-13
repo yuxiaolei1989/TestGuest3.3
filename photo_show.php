@@ -21,7 +21,22 @@ if(isset($_GET['id'])){
                                 WHERE
                                     tg_id='{$_GET['id']}'
                              ")){
-           
+         if($_POST['password']){
+             if(!!$_rows2 = _fetch_array("SELECT
+                 tg_password
+                 FROM
+                 tg_dir
+                 WHERE
+                 tg_id='{$_rows['tg_id']}'
+                 ")){
+                 if($_rows2['tg_password'] == sha1($_POST['password'])){
+                     setcookie('photo'.$_rows['tg_id'],$_rows['tg_name']);
+                     _location(null, 'photo_show.php?id='.$_rows['tg_id']);
+                 }else{
+                     _alert_back("相册密码不正确！");
+                 }
+             }
+         }
         
     }else{
         _alert_back("不存在此相册");
@@ -53,6 +68,8 @@ $_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY 
 <div id="photo">
 	<h2><?php echo $_rows['tg_name']?></h2>
 	<?php 
+	
+	if(!empty($_rows['tg_type']) || $_COOKIE['photo'.$_rows['tg_id']] == $_rows['tg_name'] || isset($_SESSION['admin'])){
 	   while(!!$_rows = _fetch_array_list($_result)){
 	       $_rows = _html($_rows);
 	?>
@@ -71,6 +88,13 @@ $_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY 
     
 	<p><a href="photo_add_img.php?id=<?php echo $_GET['id']?>">上传图片</a></p>
 
+	<?php 
+	}else{
+	    echo '<form method="post" action="photo_show.php?id='.$_GET['id'].'">';
+	    echo '<p>请输入密码：<input type="password" name="password" /> <input type="submit" value="确认" /></p>';
+	    echo '</form>';
+	}
+	?>
 </div>
 <?php 
 	require ROOT_PATH.'includes/footer.inc.php';

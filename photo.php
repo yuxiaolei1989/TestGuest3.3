@@ -58,10 +58,18 @@ $_result = _query("SELECT
 	       }else{
 	           $_rows['face_html'] = '<img src="'.$_rows['tg_face'].'" alt="'.$_rows['tg_name'].'" />';
 	       }
+	       
+	       $_rows['photo'] = _fetch_array("SELECT
+                                COUNT(*) AS 
+                                        count
+                                FROM
+                                    tg_photo
+                                WHERE
+                                        tg_sid={$_rows['tg_id']}");
 	?>
 	<dl>
 	   <dt><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['face_html']?></a></dt>
-	   <dd><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['tg_name']?></a></dd>
+	   <dd><a href="photo_show.php?id=<?php echo $_rows['tg_id']?>"><?php echo $_rows['tg_name']?></a>(<?php echo $_rows['photo']['count']?>)</dd>
 	   <?php if(isset($_SESSION['admin'])){?>
 	   <dd>[<a href="photo_modify_dir.php?id=<?php echo $_rows['tg_id']?>">修改</a>] [<a>删除</a>]</dd>
 	   <?php }?>
