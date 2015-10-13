@@ -23,6 +23,19 @@ $haha = _page("SELECT tg_id FROM tg_article WHERE tg_reid=0", $_system['tg_artic
 
 $_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FROM tg_article WHERE tg_reid=0 ORDER BY tg_date DESC LIMIT $_pagenum,$_pagesize");
 
+$_photo = _fetch_array("SELECT
+                                *
+                        FROM
+                            tg_photo
+                        WHERE
+                            tg_sid in (SELECT tg_id FROM tg_dir WHERE tg_type=0)
+                        ORDER BY
+                            tg_date
+                        DESC
+                        LIMIT
+                            1
+                     ");
+      print_r($_photo);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -70,7 +83,8 @@ $_result = _query("SELECT tg_id,tg_type,tg_title,tg_readcount,tg_commendcount FR
 </div>
 
 <div id="pics">
-	<h2>最新图片</h2>
+	<h2>最新图片--<?php echo $_photo['tg_name']?></h2>
+	<a href="photo_detail.php?id=<?php echo $_photo['tg_id']?>"><img src="thumb.php?filename=<?php echo $_photo['tg_url']?>&percent=0.5"/></a>
 </div>
 
 <?php 

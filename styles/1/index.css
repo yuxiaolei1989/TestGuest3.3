@@ -90,13 +90,6 @@
 	margin:0 0 10px 0;
 	font-size:12px;
 }
-#pics {
-	width:340px;
-	height:250px;
-	border:2px solid #ccc;
-	float:left;
-}
-
 #user dl{
 	width:190px;
 	margin:0 auto;
@@ -148,4 +141,15 @@
 }
 #user dl dd.flower{
 	background:url(../../images/x4.gif) no-repeat left 35%;
+}
+#pics {
+	width:340px;
+	height:250px;
+	border:2px solid #ccc;
+	float:left;
+	text-align:center;
+}
+#pics img{
+	display:block;
+	margin:20px auto;
 }

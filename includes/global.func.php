@@ -97,8 +97,8 @@ function _thumb($_filename,$_percent){
     
     list($_width,$_height) = getimagesize($_filename);
     
-    $_new_width = $_width * 0.2;
-    $_new_height = $_height * 0.2;
+    $_new_width = $_width * $_percent;
+    $_new_height = $_height * $_percent;
     
     $_new_image = imagecreatetruecolor($_new_width, $_new_height);
     

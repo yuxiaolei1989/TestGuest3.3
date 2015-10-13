@@ -15,6 +15,7 @@ require dirname(__FILE__).'/includes/common.inc.php';
 if(isset($_GET['id'])){
     if(!!$_rows = _fetch_array("SELECT
                                     tg_id,
+                                    tg_type,
                                     tg_name
                                 FROM
                                     tg_dir
@@ -68,8 +69,7 @@ $_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY 
 <div id="photo">
 	<h2><?php echo $_rows['tg_name']?></h2>
 	<?php 
-	
-	if(!empty($_rows['tg_type']) || $_COOKIE['photo'.$_rows['tg_id']] == $_rows['tg_name'] || isset($_SESSION['admin'])){
+	if($_rows['tg_type'] != 1 || $_COOKIE['photo'.$_rows['tg_id']] == $_rows['tg_name'] || isset($_SESSION['admin'])){
 	   while(!!$_rows = _fetch_array_list($_result)){
 	       $_rows = _html($_rows);
 	?>

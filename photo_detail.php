@@ -76,6 +76,23 @@ if(isset($_GET['id'])){
                                 WHERE
                                     tg_id='{$_GET['id']}'
                              ")){
+                             
+       
+      if(!!$_rows2 = _fetch_array("SELECT
+                                tg_name,
+                                tg_type,
+                                 tg_password
+                                 FROM
+                                 tg_dir
+                                 WHERE
+                                 tg_id='{$_rows['tg_sid']}'
+                                 ")){
+            if($_rows2['tg_type'] != 1 || $_COOKIE['photo'.$_rows['tg_sid']] == $_rows2['tg_name'] || isset($_SESSION['admin'])){
+                
+            }else{
+                _location(null,'photo_show.php?id='.$_rows['tg_sid']);
+            }
+      }
      _query("UPDATE
          tg_photo
          SET
