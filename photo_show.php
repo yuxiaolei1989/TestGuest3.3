@@ -11,6 +11,61 @@ define('IN_TG',true);
 define('SCRIPT','photo_show');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
+if($_GET['action'] == 'delete' && isset($_GET['id'])){
+    if (!!$_rows = _fetch_array("SELECT
+        tg_uniqid
+        FROM
+        tg_user
+        WHERE
+        tg_username='{$_COOKIE['username']}'
+        LIMIT
+        1"
+    )) {
+        _uniqid($_rows['tg_uniqid'],$_COOKIE['uniqid']);
+        
+        
+        $_photo = _fetch_array("SELECT
+            *
+            FROM
+            tg_photo
+            WHERE
+            tg_id='{$_GET['id']}'
+            LIMIT
+            1"
+        );
+        
+        if(!!$_photo){
+            if($_photo['tg_username'] == $_COOKIE['username'] || $_SESSION['admin']){
+                
+                _query("DELETE FROM tg_photo WHERE tg_id='{$_photo['tg_id']}' LIMIT 1");
+                if(_affected_rows() == 1){
+                    if(file_exists($_photo['tg_url'])){
+                        unlink($_photo['tg_url']);
+                    }else{
+                        _alert_back("文件不存在！");
+                    }
+                    _close();
+                    _location("恭喜你图片删除成功！", "photo_show.php?id=".$_photo['tg_sid']);
+                }else{
+                    _close();
+                    _location("图片删除失败！", "photo_show.php?id=".$_photo['sid']);
+                }
+                
+                
+            }else{
+                _alert_back("非法操作！");
+            }
+        }else{
+            _alert_back("不存在此图片！");
+        }
+        
+        
+        
+    }else{
+        _alert_back("非法操作！");
+    }
+}
+
 
 if(isset($_GET['id'])){
     if(!!$_rows = _fetch_array("SELECT
@@ -77,6 +132,11 @@ $_result = _query("SELECT * FROM tg_photo WHERE tg_sid='{$_GET['id']}' ORDER BY 
     	   <dt><a href="photo_detail.php?id=<?php echo $_rows['tg_id']?>"><img src="thumb.php?filename=<?php echo $_rows['tg_url']?>&percent=0.3"/></a></dt>
     	   <dd class="name"><?php echo $_rows['tg_name']?></dd>
     	   <dd class="friend">浏览量 （<strong><?php echo $_rows['tg_readcount']?></strong>） 评论量 （<strong><?php echo $_rows['tg_commendcount']?></strong>）<br/>上传者：<?php echo $_rows['tg_username']?></dd>
+    	   <?php 
+    	       if($_rows['tg_username'] == $_COOKIE['username'] || $_SESSION['admin']){
+    	   ?>
+    	   <dd>[<a href="?action=delete&id=<?php echo $_rows['tg_id']?>">删除</a>]</dd>
+    	   <?php }?>
     	</dl>
 	   
 	<?php }?>
