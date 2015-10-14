@@ -11,6 +11,48 @@ define('IN_TG',true);
 define('SCRIPT','article');
 //引入公共文件
 require dirname(__FILE__).'/includes/common.inc.php';
+
+if($_GET['action'] == 'nice' && isset($_GET['id']) && isset($_GET['on'])){
+    $_rows = _fetch_array("SELECT
+        tg_uniqid,
+        tg_article_time
+        FROM
+        tg_user
+        WHERE
+        tg_username='{$_COOKIE['username']}'");
+    if(!!$_rows){
+        _uniqid($_rows['tg_uniqid'], $_COOKIE['uniqid']);
+        
+        _query("UPDATE
+                    tg_article
+                SET
+                    tg_nice='{$_GET['on']}'
+                WHERE
+                    tg_id='{$_GET['id']}'
+                LIMIT
+                     1
+              ");
+        if(_affected_rows() == 1){
+            if($_GET['on']){
+                $_str = "设置";
+            }else{
+                $_str = "取消";
+            }
+            _close();
+            //_session_destroy();
+            _location("恭喜你".$_str."精华帖成功！", "article.php?id=".$_GET['id']);
+        }else{
+            _close();
+            //_session_destroy();
+            _alert_back("很遗憾，".$_str."精华帖失败了~_~");
+        }
+        
+    }else{
+        _alert_back("非法登录！");
+    }
+    
+}
+
 global $_system;
 if($_GET['action'] == 'rearticle'){
     if($_system['tg_code'] == 1){
@@ -90,6 +132,7 @@ if(isset($_GET['id'])){
                                 tg_content,
                                 tg_readcount,
                                 tg_commendcount,
+                                tg_nice,
                                 tg_date,
                                 tg_modify_date
                             FROM 
@@ -140,7 +183,7 @@ if(isset($_GET['id'])){
         }
         
         //帖子修改
-        if($_html['tg_username'] == $_COOKIE['username']){
+        if($_html['tg_username'] == $_COOKIE['username'] || isset($_SESSION['admin'])){
             $_html['subject_modify'] = '[<a href="article_modify.php?id='.$_GET['id'].'">修改</a>]';
         }
         
@@ -197,6 +240,18 @@ if(isset($_GET['id'])){
 
 <div id="article">
 	<h2>帖子详情</h2>
+	
+	<?php 
+	   if($_rows['tg_nice']){
+	?>
+	<img src="images/nice.gif" alt="精华帖" class="nice" />
+	<?php }?>
+	<?php 
+	   if($_rows['tg_readcount'] >= 200 && $_rows['tg_commendcount'] >= 10){
+	?>
+	<img src="images/hot.gif" alt="热帖" class="hot" />
+	
+	<?php }?>
 	<?php if($_page == 1 || $_page == 0){?>
 	<div class="subject" id="subject">
     	<dl class="">
@@ -211,7 +266,13 @@ if(isset($_GET['id'])){
     	</dl>
         <div id="content">
             <div class="user">
-                <span><?php echo $_html['reply']; ?><?php echo $_html['subject_modify']?>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
+                <span>
+                    <?php if(empty($_rows['tg_nice'])){?>
+                        [<a href="article.php?action=nice&on=1&id=<?php echo $_rows['tg_id'] ?>">设置精华帖</a>]
+                    <?php }else{?>
+                        [<a href="article.php?action=nice&on=0&id=<?php echo $_rows['tg_id'] ?>">取消精华帖</a>]
+                    <?php }?>
+                    <?php echo $_html['reply']; ?><?php echo $_html['subject_modify']?>1#</span><?php echo $_html['tg_username_floor']?> | <?php echo $_rows['tg_date']?>
             </div>
             <h3>主题：<?php echo $_rows['tg_title']?> <img src="images/icon<?php echo $_rows['tg_type']?>.gif" alt="" /></h3>
             <div class="detail">

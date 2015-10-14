@@ -4,12 +4,22 @@
 	min-height:200px;
 	border:2px solid #ccc;
 	font-size:12px;
+	position:relative;
 }
 #article h2 {
 	text-indent:0;
 	text-align:center;
 }
-
+#article img.nice{
+	position:absolute;
+	top:-30px;
+	left:520px;
+}
+#article img.hot{
+	position:absolute;
+	top:-30px;
+	left:620px;
+}
 .subject dl{
 	width:190px;
 	padding-top:10px;

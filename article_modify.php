@@ -16,49 +16,20 @@ if(!isset($_COOKIE['username'])){
     _location("请先登录", "login.php");
 }
 
-if(isset($_GET['id'])){
-    $_rows = _fetch_array("SELECT
-                                tg_username,
-                                tg_type,
-                                tg_title,
-                                tg_content,
-                                tg_reid
-                            FROM
-                                tg_article
-                            WHERE
-                                tg_id='{$_GET['id']}'
-        ");
-    if(!!$_rows){
-        if($_rows['tg_username'] != $_COOKIE['username']){
-            _alert_back("這不是你的帖子，你不能進行修改！");
-        }
-        $_rows = _html($_rows);
-        if($_rows['tg_reid'] == 0){
-            $_clean['text'] = '帖子';
-        }else{
-            $_clean['text'] = '回復';
-        }
-    }else{
-        _alert_back("找不到這個帖子！");
-    }
-}else{
-    _alert_back("非法操作！");
-}
-
 if($_GET['action'] == 'modify'){
-    
-    _check_code($_POST['code'],$_SESSION['code']);
-    
-    $_rows2 = _fetch_array("SELECT 
-                            tg_uniqid
-                     FROM
-                            tg_user
-                     WHERE
-                            tg_username='{$_COOKIE['username']}'");
 
-    
+    _check_code($_POST['code'],$_SESSION['code']);
+
+    $_rows2 = _fetch_array("SELECT
+        tg_uniqid
+        FROM
+        tg_user
+        WHERE
+        tg_username='{$_COOKIE['username']}'");
+
+
     _uniqid($_rows2['tg_uniqid'], $_COOKIE['uniqid']);
-    
+
     include ROOT_PATH.'includes/check.func.php';
     $_clean = array();
     if($_rows['tg_reid'] == 0){
@@ -73,16 +44,16 @@ if($_GET['action'] == 'modify'){
     $_clean['content'] = _check_post_content($_POST['content'],2);
     $_clean = _mysql_string($_clean);
     _query("UPDATE
-                tg_article
-            SET
-                tg_title = '{$_clean['title']}',
-                tg_type = '{$_clean['type']}',
-                tg_content = '{$_clean['content']}',
-                tg_modify_date = NOW()
-            WHERE
-                tg_id='{$_GET['id']}'
+        tg_article
+        SET
+        tg_title = '{$_clean['title']}',
+        tg_type = '{$_clean['type']}',
+        tg_content = '{$_clean['content']}',
+        tg_modify_date = NOW()
+        WHERE
+        tg_id='{$_GET['id']}'
         ");
-    
+
     if(_affected_rows() == 1){
         _close();
         //_session_destroy();
@@ -92,7 +63,36 @@ if($_GET['action'] == 'modify'){
         //_session_destroy();
         _alert_back('很遗憾，'.$_clean['text'].'修改失败了~_~');
     }
-    
+
+}
+
+if(isset($_GET['id'])){
+    $_rows = _fetch_array("SELECT
+                                tg_username,
+                                tg_type,
+                                tg_title,
+                                tg_content,
+                                tg_reid
+                            FROM
+                                tg_article
+                            WHERE
+                                tg_id='{$_GET['id']}'
+        ");
+    if(!!$_rows){
+        if($_rows['tg_username'] != $_COOKIE['username'] && !isset($_SESSION['admin']) ){
+            _alert_back("這不是你的帖子，你不能進行修改！");
+        }
+        $_rows = _html($_rows);
+        if($_rows['tg_reid'] == 0){
+            $_clean['text'] = '帖子';
+        }else{
+            $_clean['text'] = '回復';
+        }
+    }else{
+        _alert_back("找不到這個帖子！");
+    }
+}else{
+    _alert_back("非法操作！");
 }
 
 $_SESSION['uniqid'] = $_uniqid = _sha1_uniqid();
